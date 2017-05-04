@@ -37,6 +37,49 @@ def nivel1(): # Abrir la ventana del nivel 1, fusionar funcion de guardado a pre
     c1=tkinter.Canvas(nvl1, width=200, height=100).pack
     mapa=tkinter.PhotoImage(file="1nivel.png")#imagen del mapa
     lblmapa=tkinter.Label(nvl1,image=mapa)
+#######
+def gasolina():
+    """
+    con esta funcion se crea el label de la gasolina
+    """
+    global gaso,nvl1,lbl3,cont1
+    
+    
+    if(cont1>=0):
+        gaso.set(str(cont1))
+        cont1=cont1-1
+    c1.after(1000,gasolina)
+    if(cont1<0):
+        nvl1.destroy()
+    
+
+#####mover player    
+def key(event): #teclas para mover el jugador
+    """
+    """
+    global x,i,j,y
+    tecla = repr(event.char)
+    #print(tecla)
+    if(tecla == "'d'"):
+        if(i < 190):
+            c1.delete(x)
+            i = i + 10
+            x = c1.create_image(400+i,750+j,image=carro)
+            
+        else:
+            c1.delete(x)
+            x = c1.create_image(400+i,750+j,image=carroc2)            
+    if(tecla == "'a'"):
+        if(i > -195):
+            c1.delete(x)
+            i = i - 10
+            x = c1.create_image(400+i,750+j,image=carro)
+        else:
+            c1.delete(x)
+            x = c1.create_image(400+i,750+j,image=carroc2)
+
+####mover player
+
 def nivel2(): # Abrir la ventana del nivel 2, fusionar funcion de guardado a precionar nivel 2
     """
     Esta funcion es para abrir una nueva ventana, que abre el mapa del nivel 2
