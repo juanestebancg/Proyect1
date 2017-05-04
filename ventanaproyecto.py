@@ -79,6 +79,47 @@ def key(event): #teclas para mover el jugador
             x = c1.create_image(400+i,750+j,image=carroc2)
 
 ####mover player
+def mini():#mover minivan
+    """
+    """
+    global nvl1,y,p,c,z,c1
+    
+    if(c<350):
+        c1.move(z,0,2)
+        c = c + 1
+        nvl1.after(10,mini)
+        
+        
+    if(c==350):
+        c1.delete(z)
+        c = 0
+        z=c1.create_image(500,-50,image=minivan)
+###enemigo minivan
+###mover fondo
+def fondito():
+    """
+    """
+    global c1,nvl1
+    c22=0
+    c32=0
+    if(c22<5):
+        c1.move(y,0,0.8)
+        c22=c22+1
+        c32=c32+1
+        nvl1.after(1,fondito)
+def fondito2():
+    """
+    """
+    global c1,nvl1
+    c222=0
+    c322=0
+    if(c222<5):
+        c1.move(y2,0,0.8)
+        c22=c222+1
+        c32=c322+1
+        nvl1.after(1,fondito2)
+
+###mover fondo            
 
 def nivel2(): # Abrir la ventana del nivel 2, fusionar funcion de guardado a precionar nivel 2
     """
