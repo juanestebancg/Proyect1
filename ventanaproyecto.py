@@ -257,7 +257,7 @@ def keyy():
             #c1.delete(x)
             #x = c1.create_image(400+i,750+j,image=carroc)
     if(76 in h):
-        if(i2 < 150):
+        if(i2 < 160):
             c1.delete(x2)
             i2 = i2 + 3
             x2 = c1.create_image(830+i2,750+j,image=carro)
@@ -817,7 +817,7 @@ def keyy2():
             #c1.delete(x)
             #x = c1.create_image(400+i,750+j,image=carroc)
     if(76 in h):
-        if(i2 < 150):
+        if(i2 < 160):
             can2.delete(x2)
             i2 = i2 + 3
             x2 = can2.create_image(830+i2,750+j,image=carro)
@@ -1454,7 +1454,7 @@ def keyy3():
             #c1.delete(x)
             #x = c1.create_image(400+i,750+j,image=carroc)
     if(76 in h):
-        if(i2 < 150):
+        if(i2 < 160):
             can3.delete(x2)
             i2 = i2 + 3
             x2 = can3.create_image(830+i2,750+j,image=carro)
@@ -2004,18 +2004,645 @@ def podernvl33 ():
 
 ###-------------------------------------------------------------nyan
 
+###---mapa
+mapa4=tkinter.PhotoImage(file="mapa4444.png")#imagen del mapa
 
+###---mapa
 
     
 ###---------------------------------------------------------------------------------------------------nivel 3
+
+###-----------------------------------------------------------------------------------------------------nivel 4
     
 def nivel4(): # Abrir la ventana del nivel 4, fusionar funcion de guardado a presionar nivel 4
     """
     Esta funcion es para abrir una nueva ventana, que abre el mapa del nivel 4
     """
-    nvl4 = tkinter.Tk()
+    global can4,nvl4,mapa2,x,x2,z,gaso,gaso22,puntos,puntos22,velocidad,min2,y,y2,a,run2,fight,fight2,aceite,aceite2,nyan,nyan2
+    nvl4 = tkinter.Toplevel(w0)#crear la ventana del nivel 2
+    w0.iconify()
+    nvl4.geometry("1200x850")#dimensiones de la ventana
+    can4=tkinter.Canvas(nvl4,bg="black", width=1600, height=800)#canvas del nivel 2
+    can4.pack()
+    y=can4.create_image(400,400,image=mapa4)#mapa del nivel 2
+    y2=can4.create_image(847,400,image=mapa4)
+    can4.lower(y)
+    can4.lower(y2)
+    #label gasolina, jugadores, puntos
+    lbl3=tkinter.Label(nvl4,textvariable= gaso,fg="white",bg="black", underline=True,font=("",16,"bold")).place(x=50,y=62)#GASOLINA 1
+    lblgaso2=tkinter.Label(nvl4,textvariable= gaso22,fg="white",bg="black", underline=True,font=("",16,"bold")).place(x=50,y=430)#gasolina 2
+    lbljugador1=tkinter.Label(nvl4,text=j1.get(),fg="white",bg="black",font=("Arial",14)).place(x=50,y=10)
+    lbljugador2=tkinter.Label(nvl4,text=j2.get(),fg="white",bg="black",font=("Arial",14)).place(x=50,y=400)
+    lblpuntos=tkinter.Label(nvl4,textvariable=puntos,fg="white",bg="black",font=("",16,"bold")).place(x=50,y=100)#puntos 1
+    lblpuntos2=tkinter.Label(nvl4,textvariable=puntos22,fg="white",bg="black",font=("",16,"bold")).place(x=50,y=460)#puntos 2
+    lblvelocidad=tkinter.Label(nvl4,textvariable=velocidad,fg="white",bg="black",font=("",16,"bold")).place(x=50,y=130)# velocidad 1
+    lblvelocidad2=tkinter.Label(nvl4,textvariable=velocidad22,fg="white",bg="black",font=("",16,"bold")).place(x=50,y=490)#velocidad 2
+    ##cargar imagenes del player y los enemigos
+    x= can4.create_image(400+i,750+j,image=carro)#imagen carro
+    a=can4.create_image(400,170,image=runner)#imagen runner
+    z=can4.create_image(500,-50,image=minivan)#imagen minivan
+    fight=can4.create_image(500,50,image=fighter)#imagen fighter
+    aceite=can4.create_image(480,30,image=mancha)#aceite del 1
+    nyan=can4.create_image(450,50,image=imagengasolina)#nyan 1
+    ##2 pantalla
+    x2=can4.create_image(830,750,image=carro)#imagen carro 2
+    nyan2=can4.create_image(770,50,image=imagengasolina)#nyan 2
+    min2=can4.create_image(830,-50,image=minivan)#minivan dos
+    fight2=can4.create_image(750,50,image=fighter)#fighter 2
+    run2=can4.create_image(730,50,image=runner)#imagen runner
+    aceite2=can4.create_image(770,30,image=mancha)#aceite del 1
+    can4.bind("<KeyPress>", keydown)
+    can4.bind("<KeyRelease>", keyup)
+    can4.focus_set()
+    #funciones
+    mininvl4()
+    mininvl44()
+    gasolinanvl4()
+    gasolinanvl44()
+    puntosnvl4()
+    puntosnvl44()
+    velocidadnvl4()
+    velocidadnvl44()
+    fonditonvl4()
+    fonditonvl44()
+    runernvl4()
+    runernvl44()
+    fighterrnvl4()
+    fighterrnvl44()
+    manchitanvl4()
+    manchitanvl44()
+    podernvl4()
+    podernvl44()
+    keyy4()
+
+###-------------------------------------------------------------players
+def keyy4():
+    global h, playernvl2,i,j,y,i2,x2,nvl4,playernvl22,x,can4
+    if(68 in h):
+        if(i<150):
+            can4.delete(x)
+            i = i + 3
+            x = can4.create_image(400+i,750+j,image=carro)
+        #else:
+            #c1.delete(x)
+            #x = c1.create_image(400+i,750+j,image=carroc) 
+    if(65 in h):
+        if(i > -140):
+            can4.delete(x)
+            i = i - 3
+            x = can4.create_image(400+i,750+j,image=carro)
+        #else:
+            #c1.delete(x)
+            #x = c1.create_image(400+i,750+j,image=carroc)
+    if(76 in h):
+        if(i2 < 160):
+            can4.delete(x2)
+            i2 = i2 + 3
+            x2 = can4.create_image(830+i2,750+j,image=carro)
+        #else:
+            #c1.delete(x2)
+            #x2 = c1.create_image(830+i2,750+j,image=carroc)
+    if(74 in h):
+        if(i2 > -130):
+             can4.delete(x2)
+             i2 = i2 - 3
+             x2 = can4.create_image(830+i2,750+j,image=carro)
+       # else:
+             #c1.delete(x2)
+             #x2 = c1.create_image(830+i2,750+j,image=carroc)
+    nvl4.after(10,keyy4)
 
 
+
+
+###-------------------------------------------------------------players
+###-------------------------------------------------------------minivan
+def mininvl4():#mover minivan
+    """
+    Esta funcion mueve la minivan
+    """
+    
+    global nvl4,y,p,c,z,can4,contadormini,x,contgaso,contvelocidad
+    menos=random.randint(280,500)
+    if(c<240):
+        can4.move(z,0,8)
+        c = c + 1
+        
+    if(c==240):
+        #c1.delete(z)
+        
+        can4.move(z,menos-can4.coords(z)[0],-can4.coords(z)[1])
+        c = 0
+        #z=c1.create_image(500,-50,image=minivan)
+
+    if(contadormini<950):#250
+        
+        contadormini = contadormini + 1
+        posx1 = can4.coords(x)[0]
+        posy1 = can4.coords(x)[1]
+        posx2 = can4.coords(z)[0]
+        posy2 = can4.coords(z)[1]
+        
+        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+
+        if(posx1>=posx2 and posx1<=posx2+28 and posy1>=posy2 and posy1<=posy2+50 or(posx1+28>=posx2 and posx1+28<=posx2+28 and posy1>=posy2 and posy1<=posy2+50) ):
+            print("crash")
+            l=x
+            x = can4.create_image(can4.coords(l)[0],can4.coords(l)[1],image=carroc)
+            can4.delete(l)
+            can4.move(z,menos-can4.coords(z)[0],-can4.coords(z)[1])
+            nvl4.after(10,mininvl4)
+            contgaso=contgaso-2
+            contvelocidad=0
+            c=0
+            can4.move(y,0,-can4.coords(y)[1])
+        else:
+            contadormini=0
+            nvl4.after(10,mininvl4)
+def mininvl44():
+    """
+    Esta funcion mueve la minivan del segundo mapa
+    """
+    
+    global nvl4,y,p,c2player,can4,contadormini2,x2,contgaso22,contvelocidad22,min2
+    menos2=random.randint(700,970)
+    if(c2player<240):
+        can4.move(min2,0,8)
+        c2player = c2player + 1
+        
+    if(c2player==240):
+        #c1.delete(z)
+        can4.move(min2,menos2-can4.coords(min2)[0],-can4.coords(min2)[1])
+        c2player = 0
+        #z=c1.create_image(500,-50,image=minivan)
+
+    if(contadormini2<950):#250
+        
+        contadormini2 = contadormini2 + 1
+        posx1m = can4.coords(x2)[0]
+        posy1m = can4.coords(x2)[1]
+        posx2m = can4.coords(min2)[0]
+        posy2m = can4.coords(min2)[1]
+        
+        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+
+        if(posx1m>=posx2m and posx1m<=posx2m+28 and posy1m>=posy2m and posy1m<=posy2m+50 or(posx1m+28>=posx2m and posx1m+28<=posx2m+28 and posy1m>=posy2m and posy1m<=posy2m+50) ):
+            print("crash")
+            l3=x2
+            x2 = can4.create_image(can4.coords(l3)[0],can4.coords(l3)[1],image=carroc)
+            can4.delete(l3)
+            can4.move(min2,menos2-can4.coords(min2)[0],-can4.coords(min2)[1])
+            nvl4.after(10,mininvl44)
+            contgaso22=contgaso22-2
+            contvelocidad22=0
+            c2player=0
+            can4.move(y2,0,-can4.coords(y2)[1])
+        else:
+            contadormini2=0
+            nvl4.after(10,mininvl44)
+
+
+###---------------------------------------------------------------minivan
+###-----------------------------------------------------------------------------gasolina
+def gasolinanvl4():
+    """
+    con esta funcion se crea el label de la gasolina
+    """
+    global gaso,nvl4,lbl3,contgaso,can4
+    
+    
+    if(contgaso>0):
+        gaso.set(str(contgaso)+" "+"G")
+        contgaso=contgaso-1
+    can4.after(1000,gasolinanvl4)
+    if(contgaso==0):
+        nvl4.destroy()
+        print("2 win")
+    
+def gasolinanvl44():
+    """
+    con esta funcion se crea el label de la gasolina
+    """
+    global gaso22,nvl4,contgaso22
+    
+    
+    if(contgaso22>0):
+        gaso22.set(str(contgaso22)+" "+ "G")
+        contgaso22=contgaso22-1
+    can4.after(1000,gasolinanvl44)
+    if(contgaso22==0):
+        nvl4.destroy()
+        print("1 win")
+
+###-----------------------------------------------------------------------------gasolina
+###-----------------------------------------------------------------------------puntos
+####puntos
+def puntosnvl4():
+    """
+    control de puntos
+    """
+    global nvl4,contpuntos,puntos,lblpuntos
+    if(contpuntos>=0):
+        puntos.set(str(contpuntos)+ " "+"M")
+        contpuntos=contpuntos+1
+    can4.after(10,puntosnvl4)
+
+def puntosnvl44():
+    """
+    control de puntos
+    """
+    global nvl4,contpuntos22,puntos22,lblpuntos
+    if(contpuntos22>=0):
+        puntos22.set(str(contpuntos22)+" "+"M")
+        contpuntos22=contpuntos22+1
+    can4.after(10,puntosnvl44)
+
+###------------------------------------------------------------------------puntos
+###--------------------------------------------------------------------------velocidad
+####velocidad
+def velocidadnvl4():
+    """
+    funcion para el label de velocidad
+    """
+    global nvl4,contvelocidad,velocidad,lblvelocidad
+    if(contvelocidad>=0 and contvelocidad<=180):
+        velocidad.set(str(contvelocidad)+ " "+ "KM/H")
+        contvelocidad=contvelocidad+1
+    can4.after(100,velocidadnvl4)
+def velocidadnvl44():
+    """
+    funcion para el label de velocidad
+    """
+    global nvl4,contvelocidad22,velocidad22,lblvelocidad
+    if(contvelocidad22>=0 and contvelocidad22<=180):
+        velocidad22.set(str(contvelocidad22)+" "+"KM/H")
+        contvelocidad22=contvelocidad22+1
+    can4.after(100,velocidadnvl44)
+
+###---------------------------------------------------------------------------velocidad
+###--------------------------------------------------------------------fondo
+def fonditonvl4():
+    """
+    """
+    global can4,nvl4
+    c22=0
+    c32=0
+    if(c22<5):
+        can4.move(y,0,1.5)
+        c22=c22+1
+        c32=c32+1
+    if(can4.coords(y)[1]>=10000):
+        c22=0
+        can4.move(y,0,-can4.coords(y)[1])
+    nvl4.after(1,fonditonvl4)
+    
+        
+def fonditonvl44():
+    """
+    """
+    global can4,nvl4
+    c222=0
+    c322=0
+    if(c222<5):
+        can4.move(y2,0,1.5)
+        c222=c222+1
+        c322=c322+1
+        
+    if(can4.coords(y2)[1]>=10000):
+        c222=0
+        can4.move(y2,0,-can4.coords(y2)[1])
+    nvl4.after(1,fonditonvl44)
+###------------------------------------------------------------------fondo
+###---------------------------------------------------------------------runner
+####enemigo runner
+def runernvl4():#mover runner
+    """
+    esta funcion es para mover el runer
+    """
+    global a,ref1,direccion,contgaso,contvelocidad,contadorruner,x
+    menosruner=random.randint(280,500)
+    if(can4.coords(a)[0]>=250):
+            direccion=direccion*(-1)
+            
+    if(can4.coords(a)[0]<=550):
+            direccion=direccion*(-1)
+    if(can4.coords(x)[1]==can4.coords(a)[1]):
+        can4.move(a,menosruner-can4.coords(a)[0],-can4.coords(a)[1])
+    can4.move(a,direccion*5,2)
+    #nvl1.after(10,runer)
+    if(contadorruner<950):#250
+        
+        contadorruner = contadorruner + 1
+        posx1r = can4.coords(x)[0]
+        posy1r = can4.coords(x)[1]
+        posx2r = can4.coords(a)[0]
+        posy2r = can4.coords(a)[1]
+        
+        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+
+        if(posx1r>=posx2r and posx1r<=posx2r+28 and posy1r>=posy2r and posy1r<=posy2r+50 or(posx1r+28>=posx2r and posx1r+28<=posx2r+28 and posy1r>=posy2r and posy1r<=posy2r+50) ):
+            print("crash")
+            l=x
+            x = can4.create_image(can4.coords(l)[0],can4.coords(l)[1],image=carroc)
+            can4.delete(l)
+            can4.move(a,menosruner-can4.coords(a)[0],-can4.coords(a)[1])
+            nvl4.after(10,runernvl4)
+            contgaso=contgaso-2
+            contvelocidad=0
+            can4.move(y,0,-can4.coords(y)[1])
+        else:
+            contadorruner=0
+            nvl4.after(10,runernvl4)
+    
+
+
+def runernvl44():
+    """
+runer del nivel 2
+    """
+    global run2,ref1,direccion2,contadorruner2,x2,contgaso22,contvelocidad22
+    menosruner2=random.randint(700,980)
+    if(can4.coords(run2)[0]>=700):
+            direccion2=direccion2*(-1)
+            
+    if(can4.coords(run2)[0]<=980):
+            direccion2=direccion2*(-1)
+    if(can4.coords(x)[1]==can4.coords(run2)[1]):
+        can4.move(run2,menosruner2-can4.coords(run2)[0],-can4.coords(run2)[1])
+    can4.move(run2,direccion2*5,2)
+    if(contadorruner<950):#250
+        
+        contadorruner2 = contadorruner2 + 1
+        posx1r2 = can4.coords(x2)[0]
+        posy1r2 = can4.coords(x2)[1]
+        posx2r2 = can4.coords(run2)[0]
+        posy2r2 = can4.coords(run2)[1]
+        
+        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+
+        if(posx1r2>=posx2r2 and posx1r2<=posx2r2+28 and posy1r2>=posy2r2 and posy1r2<=posy2r2+50 or(posx1r2+28>=posx2r2 and posx1r2+28<=posx2r2+28 and posy1r2>=posy2r2 and posy1r2<=posy2r2+50) ):
+            print("crash")
+            l4=x2
+            x2 = can4.create_image(can4.coords(l4)[0],can4.coords(l4)[1],image=carroc)
+            can4.delete(l4)
+            can4.move(run2,menosruner2-can4.coords(run2)[0],-can4.coords(run2)[1])
+            nvl4.after(10,runernvl44)
+            contgaso22=contgaso22-2
+            contvelocidad22=0
+            can4.move(y2,0,-can4.coords(y2)[1])
+        else:
+            contadorruner2=0
+            nvl4.after(10,runernvl44)
+    
+
+###-------------------------------------------------------------------runner
+######--------------------------------------------------------------fighter
+            
+def fighterrnvl4():
+    """
+    esta funcion es para mover el fighter
+    """
+    
+    global fight,reloadfighter,x,contgaso,contvelocidad,y
+    menosfighter=random.randint(280,500)
+    if(can4.coords(x)[0]<can4.coords(fight)[0]):
+        can4.move(fight,-1.4,2)
+    elif(can4.coords(x)[0]>can4.coords(fight)[0]):
+        can4.move(fight,1.4,2)
+    else:
+        can4.move(fight,0,4)
+    if(can4.coords(x)[1]==can4.coords(fight)[1]):
+        can4.move(fight,menosfighter-can4.coords(fight)[0],-can4.coords(fight)[1])
+        #fight=c1.create_image(500,50,image=fighter)
+        
+    if(reloadfighter<950):#250
+        
+        reloadfighter = reloadfighter + 1
+        posx11 = can4.coords(x)[0]
+        posy11 = can4.coords(x)[1]
+        posx22 = can4.coords(fight)[0]
+        posy22 = can4.coords(fight)[1]
+        
+        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+
+        if(posx11>=posx22 and posx11<=posx22+28 and posy11>=posy22 and posy11<=posy22+50 or(posx11+28>=posx22 and posx11+28<=posx22+28 and posy11>=posy22 and posy11<=posy22+50) ):
+            print("crash")
+            l2=x
+            x = can4.create_image(can4.coords(l2)[0],can4.coords(l2)[1],image=carroc)
+            can4.delete(l2)
+            can4.move(fight,menosfighter-can4.coords(fight)[0],-can4.coords(fight)[1])
+            nvl4.after(10,fighterrnvl4)
+            contgaso=contgaso-2
+            contvelocidad=0
+            can4.move(y,0,-can4.coords(y)[1])
+        else:
+            reloadfighter=0
+            nvl4.after(10,fighterrnvl4)
+
+def fighterrnvl44():
+    """
+    esta funcion es para mover el fighter
+    """
+    
+    global fight2,reloadfighter2,x2,contgaso22,contvelocidad22,y
+    menosfighter2=random.randint(700,1000)
+    if(can4.coords(x2)[0]<can4.coords(fight2)[0]):
+        can4.move(fight2,-1.4,2)
+    elif(can4.coords(x2)[0]>can4.coords(fight2)[0]):
+        can4.move(fight2,1.4,2)
+    else:
+        can4.move(fight2,0,4)
+    if(can4.coords(x2)[1]==can4.coords(fight2)[1]):
+        can4.move(fight2,menosfighter2-can4.coords(fight2)[0],-can4.coords(fight2)[1])
+        #fight=c1.create_image(500,50,image=fighter)
+        
+    if(reloadfighter2<950):#250
+        
+        reloadfighter2 = reloadfighter2 + 1
+        posx11f = can4.coords(x2)[0]
+        posy11f = can4.coords(x2)[1]
+        posx22f= can4.coords(fight2)[0]
+        posy22f = can4.coords(fight2)[1]
+        
+        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+
+        if(posx11f>=posx22f and posx11f<=posx22f+28 and posy11f>=posy22f and posy11f<=posy22f+50 or(posx11f+28>=posx22f and posx11f+28<=posx22f+28 and posy11f>=posy22f and posy11f<=posy22f+50) ):
+            print("crash")
+            l22=x2
+            x2 = can4.create_image(can4.coords(l22)[0],can4.coords(l22)[1],image=carroc)
+            can4.delete(l22)
+            can4.move(fight2,menosfighter2-can4.coords(fight2)[0],-can4.coords(fight2)[1])
+            nvl4.after(10,fighterrnvl44)
+            contgaso22=contgaso22-2
+            contvelocidad22=0
+            can4.move(y2,0,-can4.coords(y2)[1])
+        else:
+            reloadfighter2=0
+            nvl4.after(10,fighterrnvl44)
+        
+        
+    
+
+####---------------------------------------------------fighter
+####----------------------------------------------------mancha
+def manchitanvl4():#mover minivan
+    """
+    mancha de aceite
+    """
+    
+    global nvl4,y,p,c,z,can4,contadormini,x,contgaso,contvelocidad,aceite,contaceite,resbalar
+    menosaceite=random.randint(280,500)
+    if(contaceite<340):
+        can4.move(aceite,0,5)
+        contaceite = contaceite + 1
+        
+    if(contaceite==340):
+        #c1.delete(z)
+        can4.move(aceite,menosaceite-can4.coords(aceite)[0],-can4.coords(aceite)[1])
+        contaceite = 0
+
+    if(resbalar<950):#250
+        
+        resbalar = resbalar + 1
+        posx1x = can4.coords(x)[0]
+        posy1x = can4.coords(x)[1]
+        posx2a = can4.coords(aceite)[0]
+        posy2a = can4.coords(aceite)[1]
+        
+        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+
+        if(posx1x>=posx2a and posx1x<=posx2a+28 and posy1x>=posy2a and posy1x<=posy2a+50 or(posx1x+28>=posx2a and posx1x+28<=posx2a+28 and posy1x>=posy2a and posy1x<=posy2a+50) ):
+            print("crash")
+            l1=x
+            x = can4.create_image(can4.coords(l1)[0],can4.coords(l1)[1],image=carroc)
+            can4.delete(l1)
+            can4.move(aceite,menosaceite-can4.coords(aceite)[0],-can4.coords(aceite)[1])
+            nvl4.after(10,manchitanvl4)
+            contgaso=contgaso-2
+            contvelocidad=0
+            contaceite=0
+            can4.move(y,0,-can4.coords(y)[1])
+        else:
+            resbalar=0
+            nvl4.after(10,manchitanvl4)
+            
+def manchitanvl44():#mover minivan
+    """
+    mancha de aceite 2
+    """
+    
+    global nvl4,y,p,can4,x2,contgaso22,contvelocidad22,aceite2,contaceite2,resbalar2
+    menosaceite2=random.randint(700,970)
+    if(contaceite2<340):
+        can4.move(aceite2,0,5)
+        contaceite2 = contaceite2 + 1
+        
+    if(contaceite2==340):
+        #c1.delete(z)
+        can4.move(aceite2,menosaceite2-can4.coords(aceite2)[0],-can4.coords(aceite2)[1])
+        contaceite2 = 0
+
+    if(resbalar2<950):#250
+        
+        resbalar2 = resbalar2 + 1
+        posx1xm2 = can4.coords(x2)[0]
+        posy1xm2 = can4.coords(x2)[1]
+        posx2am2 = can4.coords(aceite2)[0]
+        posy2am2 = can4.coords(aceite2)[1]
+        
+        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+
+        if(posx1xm2>=posx2am2 and posx1xm2<=posx2am2+28 and posy1xm2>=posy2am2 and posy1xm2<=posy2am2+50 or(posx1xm2+28>=posx2am2 and posx1xm2+28<=posx2am2+28 and posy1xm2>=posy2am2 and posy1xm2<=posy2am2+50) ):
+            print("crash")
+            l13=x2
+            x2 = can4.create_image(can4.coords(l13)[0],can4.coords(l13)[1],image=carroc)
+            can4.delete(l13)
+            can4.move(aceite2,menosaceite2-can4.coords(aceite2)[0],-can4.coords(aceite2)[1])
+            nvl4.after(10,manchitanvl44)
+            contgaso22=contgaso22-2
+            contvelocidad22=0
+            contaceite2=0
+            can4.move(y2,0,-can4.coords(y2)[1])
+        else:
+            resbalar2=0
+            nvl4.after(10,manchitanvl44)
+
+
+####--------------------------------------------------mancha
+###-----------------------------------------------------------nyan
+def podernvl4 ():
+    """
+    esta funcion es para mover el gato de la gasolina
+    """
+    global nvl4,y,p,c,z,can4,contadormini,x,contgaso,contvelocidad,contadorpoder,reloadpoder,nyan
+    menospoder=random.randint(280,500)
+    if(contadorpoder<500):
+        can4.move(nyan,0,6)
+        contadorpoder = contadorpoder + 1
+        
+    if(contadorpoder==500):
+        contadorpoder=0
+        can4.move(nyan,menospoder-can4.coords(nyan)[0],-can4.coords(nyan)[1])
+
+    if(reloadpoder<950):#250
+        
+        reloadpoder = reloadpoder + 1
+        posx1ny = can4.coords(x)[0]
+        posy1ny = can4.coords(x)[1]
+        posx2ny = can4.coords(nyan)[0]
+        posy2ny = can4.coords(nyan)[1]
+        
+        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+
+        if(posx1ny>=posx2ny and posx1ny<=posx2ny+28 and posy1ny>=posy2ny and posy1ny<=posy2ny+50 or(posx1ny+28>=posx2ny and posx1ny+28<=posx2ny+28 and posy1ny>=posy2ny and posy1ny<=posy2ny+50) ):
+            print("crash")
+            can4.move(nyan,menospoder-can4.coords(nyan)[0],can4.coords(nyan)[1]-500)
+            nvl4.after(10,podernvl4)
+            contgaso=contgaso+2
+            contadorpoder=0
+        else:
+            reloadpoder=0
+            nvl4.after(10,podernvl4)
+    
+def podernvl44 ():
+    """
+    esta funcion es para mover el gato de la gasolina
+    """
+    global nvl4,y,p,c,z,can4,contadormini,x,contgaso22,contvelocidad,contadorpoder2,reloadpoder2,nyan2
+    menospoder2=random.randint(700,980)
+    if(contadorpoder2<500):
+        can4.move(nyan2,0,6)
+        contadorpoder2 = contadorpoder2 + 1
+        
+    if(contadorpoder2==500):
+        contadorpoder2=0
+        can4.move(nyan2,menospoder2-can4.coords(nyan2)[0],-can4.coords(nyan2)[1])
+
+    if(reloadpoder2<950):#250
+        
+        reloadpoder2 = reloadpoder2 + 1
+        posx1ny2 = can4.coords(x2)[0]
+        posy1ny2 = can4.coords(x2)[1]
+        posx2ny2 = can4.coords(nyan2)[0]
+        posy2ny2 = can4.coords(nyan2)[1]
+        
+        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+
+        if(posx1ny2>=posx2ny2 and posx1ny2<=posx2ny2+28 and posy1ny2>=posy2ny2 and posy1ny2<=posy2ny2+50 or(posx1ny2+28>=posx2ny2 and posx1ny2+28<=posx2ny2+28 and posy1ny2>=posy2ny2 and posy1ny2<=posy2ny2+50) ):
+            print("crash")
+            can4.move(nyan2,menospoder2-can4.coords(nyan2)[0],can4.coords(nyan2)[1]-500)
+            nvl4.after(10,podernvl44)
+            contgaso22=contgaso22+2
+            contadorpoder2=0
+        else:
+            reloadpoder2=0
+            nvl4.after(10,podernvl44)    
+
+###-------------------------------------------------------------nyan
+
+
+
+###-----------------------------------------------------------------------------------------------------------nivel4
     
 def nivel5(): # Abrir la ventana del nivel 5, fusionar funcion de guardado a precionar nivel 5
     """
