@@ -61,7 +61,6 @@ carroc2=tkinter.PhotoImage(file="c11chocado2.png")#imagen choque2
 runner=tkinter.PhotoImage(file="c22.png")#imagen del runner
 minivan=tkinter.PhotoImage(file="c33.png")#imagen del minivan
 fighter=tkinter.PhotoImage(file="c44.png")#imagen fighter
-referencia=tkinter.PhotoImage(file="cuad11.png")#referencia
 mancha=tkinter.PhotoImage(file="manchita.png")#Aceite
 imagengasolina=tkinter.PhotoImage(file="nyan13.png")#gasolina
 gana1=tkinter.PhotoImage(file="1WIN.png")
@@ -69,7 +68,8 @@ gana1=tkinter.PhotoImage(file="1WIN.png")
 
 def nivel1(): # Abrir la ventana del nivel 1, fusionar funcion de guardado a precionar nivel 1
     """
-    Esta funcion es para abrir una nueva ventana, que abre el mapa del nivel 1
+    Esta funcion es para abrir una nueva ventana, que abre el mapa del nivel 1 y llama las funciones de todos los enemigos junto con el movimiento
+    por teclado
     """
     global c1,nvl1,mapa,a,y,x,z,gaso,lbl3,y2,j2,j2txt,fight,menos,ref1,ref2,x2,min2,aceite,fight2,gaso22,puntos22,velocidad22,run2,aceite2,nyan,nyan2
     nvl1 = tkinter.Toplevel(w0)#crear la ventana del nivel 1
@@ -108,7 +108,6 @@ def nivel1(): # Abrir la ventana del nivel 1, fusionar funcion de guardado a pre
     aceite=c1.create_image(480,30,image=mancha)#aceite del 1
     aceite2=c1.create_image(830,30,image=mancha)#aceite del 2
     fight2=c1.create_image(750,50,image=fighter)#fighter 2
-    #nyan2=c1.create_image(740,50,image=poder)
     ##cargar funciones
     gasolina()
     gasolina22()
@@ -152,33 +151,33 @@ reloadpoder2=0
 ####### Gasolina
 def gasolina():
     """
-    con esta funcion se crea el label de la gasolina
+    con esta funcion se crea el label de la gasolina y va disminuyendo con el tiempo
     """
     global gaso,nvl1,lbl3,contgaso,gana1
-    
-    
-    if(contgaso>0):
-        gaso.set(str(contgaso)+" "+"G")
+    if(contgaso>=0):
+        gaso.set(str(contgaso)+" "+"Gal.")
         contgaso=contgaso-1
     c1.after(1000,gasolina)
-    if(contgaso==0):
+    if(contgaso<0):
         nvl1.destroy()
+       
         
     
         print("2 win")
 def gasolina22():
     """
-    con esta funcion se crea el label de la gasolina
+    con esta funcion se crea el label de la gasolina del segundo jugador y va disminuyendo con el tiempo
     """
     global gaso22,nvl1,contgaso22
     
     
-    if(contgaso22>0):
-        gaso22.set(str(contgaso22)+" "+"G")
+    if(contgaso22>=0):
+        gaso22.set(str(contgaso22)+" "+"Gal.")
         contgaso22=contgaso22-1
     c1.after(1000,gasolina22)
-    if(contgaso22==0):
+    if(contgaso22<0):
         nvl1.destroy()
+
 
         print("1 win")
 
@@ -187,7 +186,7 @@ def gasolina22():
 ####puntos
 def puntoss():
     """
-    control de puntos
+    esta funcion es para medir la distancia que recorre el primer jugador
     """
     global nvl1,contpuntos,puntos,lblpuntos
     if(contpuntos>=0):
@@ -197,7 +196,7 @@ def puntoss():
 
 def puntoss22():
     """
-    control de puntos
+    esta funcion es para medir la distancia recorrida por el segundo jugador
     """
     global nvl1,contpuntos22,puntos22,lblpuntos
     if(contpuntos22>=0):
@@ -208,7 +207,7 @@ def puntoss22():
 ####velocidad
 def velocidadd():
     """
-    funcion para el label de velocidad
+    funcion para el label de velocidad que aumenta hasta 180km/h
     """
     global nvl1,contvelocidad,velocidad,lblvelocidad
     if(contvelocidad>=0 and contvelocidad<=180):
@@ -217,7 +216,7 @@ def velocidadd():
     c1.after(100,velocidadd)
 def velocidadd22():
     """
-    funcion para el label de velocidad
+    funcion para el label de velocidad del jugador 2 que aumenta hasta 180km/h
     """
     global nvl1,contvelocidad22,velocidad22,lblvelocidad
     if(contvelocidad22>=0 and contvelocidad22<=180):
@@ -230,40 +229,61 @@ h = []
 #####mover player    
 
 def keyup(e):
+    """
+    funcion para leer la tecla cuando deja de presionarse
+    """
     global h
     #print(e.keycode)
     if(e.keycode in h):
         h.pop(h.index(e.keycode))
 
 def keydown(e):
+    """
+    FUNCION que lee la tecla presionada
+    """
     global h
     if not e.keycode in h:
         h.append(e.keycode)
 def keyy():
+    """
+    funcion para mover el jugador 
+    """
     global h,x,i,j,y,i2,x2
     if(68 in h):
         if(i<150):
             c1.delete(x)
             i = i + 3
             x = c1.create_image(400+i,750+j,image=carro)
+        else:
+            c1.delete(x)
+            x = c1.create_image(400+i,750+j,image=carroc) 
         
     if(65 in h):
         if(i > -140):
             c1.delete(x)
             i = i - 3
             x = c1.create_image(400+i,750+j,image=carro)
+        else:
+            c1.delete(x)
+            x = c1.create_image(400+i,750+j,image=carroc) 
         
     if(76 in h):
         if(i2 < 160):
             c1.delete(x2)
             i2 = i2 + 3
             x2 = c1.create_image(830+i2,750+j,image=carro)
+        else:
+            c1.delete(x2)
+            x2 = c1.create_image(830+i2,750+j,image=carroc)
         
     if(74 in h):
         if(i2 > -130):
              c1.delete(x2)
              i2 = i2 - 3
              x2 = c1.create_image(830+i2,750+j,image=carro)
+        else:
+            c1.delete(x2)
+            x2 = c1.create_image(830+i2,750+j,image=carroc)
       
     if(32 in h):
          
@@ -277,6 +297,7 @@ def keyy():
 ###------------------------------------------------guardar y cargar
 def guardar():
     """
+    esta funcion es para guardar la partida del nivel 1 en un .txt, gasolina,distancia,coordenadas
     """
     global h,x,j,i,y,i2,x2,contgaso,contgaso22,contpuntos,contpuntos22,archivo,c1
     archivo = open("partida.txt", "w")
@@ -300,6 +321,7 @@ def guardar():
     
 def cargar():
     """
+    con esta funcion se carga la partida guardada previamente
     """
     global h,x,j,i,y,i2,x2,contgaso,contgaso22,contpuntos,contpuntos22,archivo,c1
     archivo=open("partida.txt","r")
@@ -341,7 +363,7 @@ def cargar():
 ##------------------------------------------------------------gasolina
 def poder ():
     """
-    esta funcion es para mover el gato de la gasolina
+    esta funcion es para mover el gato de la gasolina, la cual aumenta los galones
     """
     global nvl1,y,p,c,z,c1,contadormini,x,contgaso,contvelocidad,contadorpoder,reloadpoder,nyan
     menospoder=random.randint(280,500)
@@ -361,7 +383,7 @@ def poder ():
         posx2ny = c1.coords(nyan)[0]
         posy2ny = c1.coords(nyan)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+
 
         if(posx1ny>=posx2ny and posx1ny<=posx2ny+28 and posy1ny>=posy2ny and posy1ny<=posy2ny+50 or(posx1ny+28>=posx2ny and posx1ny+28<=posx2ny+28 and posy1ny>=posy2ny and posy1ny<=posy2ny+50) ):
             print("crash")
@@ -375,7 +397,7 @@ def poder ():
     
 def poder22 ():
     """
-    esta funcion es para mover el gato de la gasolina
+    esta funcion es para mover el gato de la gasolina de la segunda pantalla, aumenta galones
     """
     global nvl1,y,p,c,z,c1,contadormini,x,contgaso22,contvelocidad,contadorpoder2,reloadpoder2,nyan2
     menospoder2=random.randint(700,980)
@@ -413,7 +435,7 @@ direccion2=1
 ####enemigo runner
 def runer():#mover runner
     """
-    esta funcion es para mover el runer
+    esta funcion es para mover el runer de la primera pantalla
     """
     global a,ref1,direccion,contgaso,contvelocidad,contadorruner,x
     menosruner=random.randint(280,500)
@@ -425,7 +447,7 @@ def runer():#mover runner
     if(c1.coords(x)[1]==c1.coords(a)[1]):
         c1.move(a,menosruner-c1.coords(a)[0],-c1.coords(a)[1])
     c1.move(a,direccion*1,1)
-    #nvl1.after(10,runer)
+    
     if(contadorruner<950):#250
         
         contadorruner = contadorruner + 1
@@ -434,7 +456,7 @@ def runer():#mover runner
         posx2r = c1.coords(a)[0]
         posy2r = c1.coords(a)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+    
 
         if(posx1r>=posx2r and posx1r<=posx2r+28 and posy1r>=posy2r and posy1r<=posy2r+50 or(posx1r+28>=posx2r and posx1r+28<=posx2r+28 and posy1r>=posy2r and posy1r<=posy2r+50) ):
             print("crash")
@@ -454,7 +476,7 @@ def runer():#mover runner
 
 def runer22():
     """
-runer del nivel 2
+    runer de la segunda pantalla
     """
     global run2,ref1,direccion2,contadorruner2,x2,contgaso22,contvelocidad22
     menosruner2=random.randint(700,980)
@@ -474,7 +496,7 @@ runer del nivel 2
         posx2r2 = c1.coords(run2)[0]
         posy2r2 = c1.coords(run2)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+        
 
         if(posx1r2>=posx2r2 and posx1r2<=posx2r2+28 and posy1r2>=posy2r2 and posy1r2<=posy2r2+50 or(posx1r2+28>=posx2r2 and posx1r2+28<=posx2r2+28 and posy1r2>=posy2r2 and posy1r2<=posy2r2+50) ):
             print("crash")
@@ -496,7 +518,7 @@ runer del nivel 2
 
 def mini():#mover minivan
     """
-    Esta funcion mueve la minivan
+    Esta funcion mueve la minivan del mapa de la izquierda
     """
     
     global nvl1,y,p,c,z,c1,contadormini,x,contgaso,contvelocidad
@@ -506,11 +528,8 @@ def mini():#mover minivan
         c = c + 1
         
     if(c==430):
-        #c1.delete(z)
-        
         c1.move(z,menos-c1.coords(z)[0],-c1.coords(z)[1])
         c = 0
-        #z=c1.create_image(500,-50,image=minivan)
 
     if(contadormini<950):#250
         
@@ -520,7 +539,7 @@ def mini():#mover minivan
         posx2 = c1.coords(z)[0]
         posy2 = c1.coords(z)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+        
 
         if(posx1>=posx2 and posx1<=posx2+28 and posy1>=posy2 and posy1<=posy2+50 or(posx1+28>=posx2 and posx1+28<=posx2+28 and posy1>=posy2 and posy1<=posy2+50) ):
             print("crash")
@@ -538,7 +557,7 @@ def mini():#mover minivan
             nvl1.after(10,mini)
 def mini2():
     """
-    Esta funcion mueve la minivan del segundo mapa
+    Esta funcion mueve la minivan del mapa de la derecha
     """
     
     global nvl1,y,p,c2player,c1,contadormini2,x2,contgaso22,contvelocidad22,min2
@@ -548,10 +567,10 @@ def mini2():
         c2player = c2player + 1
         
     if(c2player==400):
-        #c1.delete(z)
+        
         c1.move(min2,menos2-c1.coords(min2)[0],-c1.coords(min2)[1])
         c2player = 0
-        #z=c1.create_image(500,-50,image=minivan)
+        
 
     if(contadormini2<950):#250
         
@@ -561,8 +580,6 @@ def mini2():
         posx2m = c1.coords(min2)[0]
         posy2m = c1.coords(min2)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
-
         if(posx1m>=posx2m and posx1m<=posx2m+28 and posy1m>=posy2m and posy1m<=posy2m+50 or(posx1m+28>=posx2m and posx1m+28<=posx2m+28 and posy1m>=posy2m and posy1m<=posy2m+50) ):
             print("crash")
             l3=x2
@@ -581,9 +598,9 @@ def mini2():
             
 ###enemigo minivan-----------------------------------------------------------------------------------
 ###aceite
-def manchita():#mover minivan
+def manchita():
     """
-    mancha de aceite
+    mancha de aceite del mapa de la izquierda
     """
     
     global nvl1,y,p,c,z,c1,contadormini,x,contgaso,contvelocidad,aceite,contaceite,resbalar
@@ -593,7 +610,7 @@ def manchita():#mover minivan
         contaceite = contaceite + 1
         
     if(contaceite==400):
-        #c1.delete(z)
+
         c1.move(aceite,menosaceite-c1.coords(aceite)[0],-c1.coords(aceite)[1])
         contaceite = 0
 
@@ -605,7 +622,7 @@ def manchita():#mover minivan
         posx2a = c1.coords(aceite)[0]
         posy2a = c1.coords(aceite)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+        
 
         if(posx1x>=posx2a and posx1x<=posx2a+28 and posy1x>=posy2a and posy1x<=posy2a+50 or(posx1x+28>=posx2a and posx1x+28<=posx2a+28 and posy1x>=posy2a and posy1x<=posy2a+50) ):
             print("crash")
@@ -623,9 +640,9 @@ def manchita():#mover minivan
             resbalar=0
             nvl1.after(10,manchita)
             
-def manchita22():#mover minivan
+def manchita22():
     """
-    mancha de aceite 2
+    mancha de aceite del mapa de la derecha
     """
     
     global nvl1,y,p,c1,x2,contgaso22,contvelocidad22,aceite2,contaceite2,resbalar2
@@ -635,7 +652,6 @@ def manchita22():#mover minivan
         contaceite2 = contaceite2 + 1
         
     if(contaceite2==400):
-        #c1.delete(z)
         c1.move(aceite2,menosaceite2-c1.coords(aceite2)[0],-c1.coords(aceite2)[1])
         contaceite2 = 0
 
@@ -647,7 +663,7 @@ def manchita22():#mover minivan
         posx2am2 = c1.coords(aceite2)[0]
         posy2am2 = c1.coords(aceite2)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+       
 
         if(posx1xm2>=posx2am2 and posx1xm2<=posx2am2+28 and posy1xm2>=posy2am2 and posy1xm2<=posy2am2+50 or(posx1xm2+28>=posx2am2 and posx1xm2+28<=posx2am2+28 and posy1xm2>=posy2am2 and posy1xm2<=posy2am2+50) ):
             print("crash")
@@ -669,6 +685,7 @@ def manchita22():#mover minivan
 ###mover fondo
 def fondito():
     """
+    mover el mapa de la izquierda
     """
     global c1,nvl1
     c22=0
@@ -685,6 +702,7 @@ def fondito():
         
 def fondito2():
     """
+    mover el mapa de la derecha
     """
     global c1,nvl1
     c222=0
@@ -702,7 +720,7 @@ def fondito2():
 ###enemigo fighter---------------------------------------------------------------------------------------
 def fighterr():
     """
-    esta funcion es para mover el fighter
+    esta funcion es para mover el fighter del mapa de la izquierda
     """
     
     global fight,reloadfighter,x,contgaso,contvelocidad,y
@@ -715,7 +733,7 @@ def fighterr():
         c1.move(fight,0,2)
     if(c1.coords(x)[1]==c1.coords(fight)[1]):
         c1.move(fight,menosfighter-c1.coords(fight)[0],-c1.coords(fight)[1])
-        #fight=c1.create_image(500,50,image=fighter)
+        
         
     if(reloadfighter<950):#250
         
@@ -725,7 +743,7 @@ def fighterr():
         posx22 = c1.coords(fight)[0]
         posy22 = c1.coords(fight)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+        
 
         if(posx11>=posx22 and posx11<=posx22+28 and posy11>=posy22 and posy11<=posy22+50 or(posx11+28>=posx22 and posx11+28<=posx22+28 and posy11>=posy22 and posy11<=posy22+50) ):
             print("crash")
@@ -743,7 +761,7 @@ def fighterr():
 
 def fighterr2():
     """
-    esta funcion es para mover el fighter
+    esta funcion es para mover el fighter del mapa de la derecha
     """
     
     global fight2,reloadfighter2,x2,contgaso22,contvelocidad22,y
@@ -756,7 +774,7 @@ def fighterr2():
         c1.move(fight2,0,2)
     if(c1.coords(x2)[1]==c1.coords(fight2)[1]):
         c1.move(fight2,menosfighter2-c1.coords(fight2)[0],-c1.coords(fight2)[1])
-        #fight=c1.create_image(500,50,image=fighter)
+       
         
     if(reloadfighter2<950):#250
         
@@ -766,7 +784,7 @@ def fighterr2():
         posx22f= c1.coords(fight2)[0]
         posy22f = c1.coords(fight2)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+        
 
         if(posx11f>=posx22f and posx11f<=posx22f+28 and posy11f>=posy22f and posy11f<=posy22f+50 or(posx11f+28>=posx22f and posx11f+28<=posx22f+28 and posy11f>=posy22f and posy11f<=posy22f+50) ):
             print("crash")
@@ -787,20 +805,13 @@ def fighterr2():
 ###enemigo fighter-------------------------------------------------------------------------------------------------------------------------------
 #####-------------------------------------------------------------------------------------------------- nivel 1
 
-
-
-
-
-
 ####------------------------------------------------------------------------------------------------------nivel 2
 ##imagenes
 mapa2=tkinter.PhotoImage(file="mapa2222.png")#imagen del mapa
-##imagenes
-
-   
+##imagenes   
 def nivel2(): # Abrir la ventana del nivel 2, fusionar funcion de guardado a precionar nivel 2
     """
-    Esta funcion es para abrir una nueva ventana, que abre el mapa del nivel 2
+    Esta funcion es para abrir una nueva ventana, que abre el mapa del nivel 2 y llama las funciones de los enemigos
     """
     global can2,nvl2,mapa2,x,x2,z,gaso,gaso22,puntos,puntos22,velocidad,min2,y,y2,a,run2,fight,fight2,aceite,aceite2,nyan,nyan2
     nvl2 = tkinter.Toplevel(w0)#crear la ventana del nivel 2
@@ -860,39 +871,42 @@ def nivel2(): # Abrir la ventana del nivel 2, fusionar funcion de guardado a pre
     keyy2()  
 ###------------------------------------------------------------------------------------Players
 def keyy2():
+    """
+    mueve los jugadores del segundo nivel
+    """
     global h, playernvl2,i,j,y,i2,x2,nvl2,playernvl22,x
     if(68 in h):
         if(i<150):
             can2.delete(x)
             i = i + 3
             x = can2.create_image(400+i,750+j,image=carro)
-        #else:
-            #c1.delete(x)
-            #x = c1.create_image(400+i,750+j,image=carroc) 
+        else:
+            can2.delete(x)
+            x = can2.create_image(400+i,750+j,image=carroc) 
     if(65 in h):
         if(i > -140):
             can2.delete(x)
             i = i - 3
             x = can2.create_image(400+i,750+j,image=carro)
-        #else:
-            #c1.delete(x)
-            #x = c1.create_image(400+i,750+j,image=carroc)
+        else:
+            can2.delete(x)
+            x = can2.create_image(400+i,750+j,image=carroc)
     if(76 in h):
         if(i2 < 160):
             can2.delete(x2)
             i2 = i2 + 3
             x2 = can2.create_image(830+i2,750+j,image=carro)
-        #else:
-            #c1.delete(x2)
-            #x2 = c1.create_image(830+i2,750+j,image=carroc)
+        else:
+            can2.delete(x2)
+            x2 = can2.create_image(830+i2,750+j,image=carroc)
     if(74 in h):
         if(i2 > -130):
              can2.delete(x2)
              i2 = i2 - 3
              x2 = can2.create_image(830+i2,750+j,image=carro)
-       # else:
-             #c1.delete(x2)
-             #x2 = c1.create_image(830+i2,750+j,image=carroc)
+        else:
+             can2.delete(x2)
+             x2 = can2.create_image(830+i2,750+j,image=carroc)
     if(32 in h):
         guardar2()
     nvl2.after(10,keyy2)
@@ -905,6 +919,7 @@ contpuntosnvl22=0
 ###----------------------------------------------------------------------------------------Players
 def guardar2():
     """
+    esta funcion es para guardar la partida del nivel 2
     """
     global h,x,j,i,y,i2,x2,contgasonvl2,contgasonvl22,contpuntosnvl2,contpuntosnvl22,archivo,can2
     archivo = open("partida2.txt", "w")
@@ -928,6 +943,7 @@ def guardar2():
     
 def cargar2():
     """
+    carga la partida guardada previamente del nivel 2
     """
     global h,x,j,i,y,i2,x2,contgasonvl2,contgasonvl22,contpuntosnvl2,contpuntosnvl22,archivo,can2
     archivo=open("partida2.txt","r")
@@ -970,7 +986,7 @@ def cargar2():
 ###------------------------------------------------------------------------------minivan
 def mininvl2():#mover minivan
     """
-    Esta funcion mueve la minivan
+    Esta funcion mueve la minivan del mapa de la izquierda
     """
     
     global nvl2,y,p,c,z,c1,contadormini,x,contgasonvl2,contvelocidad
@@ -979,13 +995,10 @@ def mininvl2():#mover minivan
         can2.move(z,0,3)
         c = c + 1
         
-    if(c==350):
-        #c1.delete(z)
-        
+    if(c==350): 
         can2.move(z,menos-can2.coords(z)[0],-can2.coords(z)[1])
         c = 0
-        #z=c1.create_image(500,-50,image=minivan)
-
+    
     if(contadormini<950):#250
         
         contadormini = contadormini + 1
@@ -994,7 +1007,6 @@ def mininvl2():#mover minivan
         posx2 = can2.coords(z)[0]
         posy2 = can2.coords(z)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1>=posx2 and posx1<=posx2+28 and posy1>=posy2 and posy1<=posy2+50 or(posx1+28>=posx2 and posx1+28<=posx2+28 and posy1>=posy2 and posy1<=posy2+50) ):
             print("crash")
@@ -1012,7 +1024,7 @@ def mininvl2():#mover minivan
             nvl2.after(10,mininvl2)
 def mininvl22():
     """
-    Esta funcion mueve la minivan del segundo mapa
+    Esta funcion mueve la minivan del mapa de la derecha
     """
     
     global nvl1,y,p,c2player,c1,contadormini2,x2,contgasonvl22,contvelocidad22,min2
@@ -1022,10 +1034,8 @@ def mininvl22():
         c2player = c2player + 1
         
     if(c2player==370):
-        #c1.delete(z)
         can2.move(min2,menos2-can2.coords(min2)[0],-can2.coords(min2)[1])
         c2player = 0
-        #z=c1.create_image(500,-50,image=minivan)
 
     if(contadormini2<950):#250
         
@@ -1035,7 +1045,6 @@ def mininvl22():
         posx2m = can2.coords(min2)[0]
         posy2m = can2.coords(min2)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1m>=posx2m and posx1m<=posx2m+28 and posy1m>=posy2m and posy1m<=posy2m+50 or(posx1m+28>=posx2m and posx1m+28<=posx2m+28 and posy1m>=posy2m and posy1m<=posy2m+50) ):
             print("crash")
@@ -1058,42 +1067,40 @@ def mininvl22():
 ###-----------------------------------------------------------------------------gasolina
 def gasolinanvl2():
     """
-    con esta funcion se crea el label de la gasolina
+    con esta funcion se crea el label de la gasolina del jugador de la izquierda y va disminuyendo con el tiempo
     """
     global gaso,nvl2,lbl3,contgasonvl2
     
 
-    if(contgasonvl2>0):
+    if(contgasonvl2>=0):
         gaso.set(str(contgasonvl2)+" "+"G")
         contgasonvl2=contgasonvl2-1
     can2.after(1000,gasolinanvl2)
-    if(contgasonvl2==0):
+    if(contgasonvl2<0):
         nvl2.destroy()
         print("2 win")
     
 def gasolinanvl22():
     """
-    con esta funcion se crea el label de la gasolina
+    con esta funcion se crea el label de la gasolina del jugador de la derecha y va disminuyendo con el tiempo
     """
     global gaso22,nvl2,contgasonvl22
     
 
-    if(contgasonvl22>0):
-        gaso22.set(str(contgasonvl22)+" "+ "G")
+    if(contgasonvl22>=0):
+        gaso22.set(str(contgasonvl22)+" "+ "Gal.")
         contgasonvl22=contgasonvl22-1
     can2.after(1000,gasolinanvl22)
-    if(contgasonvl22==0):
+    if(contgasonvl22<0):
         nvl2.destroy()
         print("1 win")
 
-###-----------------------------------------------------------------------------gasolina
-
-    
+###-----------------------------------------------------------------------------gasolina    
 ###-----------------------------------------------------------------------------puntos
 ####puntos
 def puntosnvl2():
     """
-    control de puntos
+    esta funcion es para medir la distancia recorrida del jugador de la izquierda
     """
     global nvl1,contpuntosnvl2,puntos,lblpuntos
     if(contpuntosnvl2>=0):
@@ -1103,7 +1110,7 @@ def puntosnvl2():
 
 def puntosnvl22():
     """
-    control de puntos
+    esta funcion es para medir la distancia recorrida del jugador de la derecha
     """
     global nvl1,contpuntosnvl22,puntos22,lblpuntos
     if(contpuntosnvl22>=0):
@@ -1115,7 +1122,7 @@ def puntosnvl22():
 ####velocidad
 def velocidadnvl2():
     """
-    funcion para el label de velocidad
+    funcion para el label de velocidad del jugador de la izquierda
     """
     global nvl2,contvelocidad,velocidad,lblvelocidad
     if(contvelocidad>=0 and contvelocidad<=180):
@@ -1124,7 +1131,7 @@ def velocidadnvl2():
     can2.after(100,velocidadnvl2)
 def velocidadnvl22():
     """
-    funcion para el label de velocidad
+    funcion para el label de velocidad del mapa de la derecha
     """
     global nvl2,contvelocidad22,velocidad22,lblvelocidad
     if(contvelocidad22>=0 and contvelocidad22<=180):
@@ -1137,6 +1144,7 @@ def velocidadnvl22():
 ###--------------------------------------------------------------------fondo
 def fonditonvl2():
     """
+    funcion para mover el mapa de la izquierda 
     """
     global c1,nvl1
     c22=0
@@ -1153,6 +1161,7 @@ def fonditonvl2():
         
 def fonditonvl22():
     """
+    funcion para mover el mapa de la derecha
     """
     global c1,nvl1
     c222=0
@@ -1171,7 +1180,7 @@ def fonditonvl22():
 ####enemigo runner
 def runernvl2():#mover runner
     """
-    esta funcion es para mover el runer
+    esta funcion es para mover el runer del mapa de la izquierda
     """
     global a,ref1,direccion,contgasonvl2,contvelocidad,contadorruner,x
     menosruner=random.randint(280,500)
@@ -1183,7 +1192,7 @@ def runernvl2():#mover runner
     if(can2.coords(x)[1]==can2.coords(a)[1]):
         can2.move(a,menosruner-can2.coords(a)[0],-can2.coords(a)[1])
     can2.move(a,direccion*1.5,0.5)
-    #nvl1.after(10,runer)
+    
     if(contadorruner<950):#250
         
         contadorruner = contadorruner + 1
@@ -1192,7 +1201,6 @@ def runernvl2():#mover runner
         posx2r = can2.coords(a)[0]
         posy2r = can2.coords(a)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1r>=posx2r and posx1r<=posx2r+28 and posy1r>=posy2r and posy1r<=posy2r+50 or(posx1r+28>=posx2r and posx1r+28<=posx2r+28 and posy1r>=posy2r and posy1r<=posy2r+50) ):
             print("crash")
@@ -1212,7 +1220,7 @@ def runernvl2():#mover runner
 
 def runernvl22():
     """
-runer del nivel 2
+    esta funcion es para mover el mapa del mapaa de la derecha
     """
     global run2,ref1,direccion2,contadorruner2,x2,contgasonvl22,contvelocidad22
     menosruner2=random.randint(700,980)
@@ -1232,7 +1240,6 @@ runer del nivel 2
         posx2r2 = can2.coords(run2)[0]
         posy2r2 = can2.coords(run2)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1r2>=posx2r2 and posx1r2<=posx2r2+28 and posy1r2>=posy2r2 and posy1r2<=posy2r2+50 or(posx1r2+28>=posx2r2 and posx1r2+28<=posx2r2+28 and posy1r2>=posy2r2 and posy1r2<=posy2r2+50) ):
             print("crash")
@@ -1254,7 +1261,7 @@ runer del nivel 2
             
 def fighterrnvl2():
     """
-    esta funcion es para mover el fighter
+    esta funcion es para mover el fighter del mapa de la izquierda
     """
     
     global fight,reloadfighter,x,contgasonvl2,contvelocidad,y
@@ -1267,7 +1274,6 @@ def fighterrnvl2():
         can2.move(fight,0,2)
     if(can2.coords(x)[1]==can2.coords(fight)[1]):
         can2.move(fight,menosfighter-can2.coords(fight)[0],-can2.coords(fight)[1])
-        #fight=c1.create_image(500,50,image=fighter)
         
     if(reloadfighter<950):#250
         
@@ -1277,7 +1283,6 @@ def fighterrnvl2():
         posx22 = can2.coords(fight)[0]
         posy22 = can2.coords(fight)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx11>=posx22 and posx11<=posx22+28 and posy11>=posy22 and posy11<=posy22+50 or(posx11+28>=posx22 and posx11+28<=posx22+28 and posy11>=posy22 and posy11<=posy22+50) ):
             print("crash")
@@ -1295,7 +1300,7 @@ def fighterrnvl2():
 
 def fighterrnvl22():
     """
-    esta funcion es para mover el fighter
+    esta funcion es para mover el fighter del mapa de la derecha
     """
     
     global fight2,reloadfighter2,x2,contgasonvl22,contvelocidad22,y
@@ -1308,7 +1313,7 @@ def fighterrnvl22():
         can2.move(fight2,0,2)
     if(can2.coords(x2)[1]==can2.coords(fight2)[1]):
         can2.move(fight2,menosfighter2-can2.coords(fight2)[0],-can2.coords(fight2)[1])
-        #fight=c1.create_image(500,50,image=fighter)
+        
         
     if(reloadfighter2<950):#250
         
@@ -1317,8 +1322,7 @@ def fighterrnvl22():
         posy11f = can2.coords(x2)[1]
         posx22f= can2.coords(fight2)[0]
         posy22f = can2.coords(fight2)[1]
-        
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+
 
         if(posx11f>=posx22f and posx11f<=posx22f+28 and posy11f>=posy22f and posy11f<=posy22f+50 or(posx11f+28>=posx22f and posx11f+28<=posx22f+28 and posy11f>=posy22f and posy11f<=posy22f+50) ):
             print("crash")
@@ -1333,18 +1337,14 @@ def fighterrnvl22():
         else:
             reloadfighter2=0
             nvl2.after(10,fighterrnvl22)
-        
-        
-    
+            
 
 ####---------------------------------------------------fighter
 
-
-
 ####----------------------------------------------------mancha
-def manchitanvl2():#mover minivan
+def manchitanvl2():
     """
-    mancha de aceite
+    mancha de aceite del mapa de la izquierda
     """
     
     global nvl1,y,p,c,z,c1,contadormini,x,contgasonvl2,contvelocidad,aceite,contaceite,resbalar
@@ -1354,7 +1354,6 @@ def manchitanvl2():#mover minivan
         contaceite = contaceite + 1
         
     if(contaceite==400):
-        #c1.delete(z)
         can2.move(aceite,menosaceite-can2.coords(aceite)[0],-can2.coords(aceite)[1])
         contaceite = 0
 
@@ -1366,7 +1365,6 @@ def manchitanvl2():#mover minivan
         posx2a = can2.coords(aceite)[0]
         posy2a = can2.coords(aceite)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1x>=posx2a and posx1x<=posx2a+28 and posy1x>=posy2a and posy1x<=posy2a+50 or(posx1x+28>=posx2a and posx1x+28<=posx2a+28 and posy1x>=posy2a and posy1x<=posy2a+50) ):
             print("crash")
@@ -1384,9 +1382,9 @@ def manchitanvl2():#mover minivan
             resbalar=0
             nvl2.after(10,manchitanvl2)
             
-def manchitanvl22():#mover minivan
+def manchitanvl22():
     """
-    mancha de aceite 2
+    mancha de aceite del mapa de la derecha
     """
     
     global nvl1,y,p,c1,x2,contgasonvl22,contvelocidad22,aceite2,contaceite2,resbalar2
@@ -1396,7 +1394,6 @@ def manchitanvl22():#mover minivan
         contaceite2 = contaceite2 + 1
         
     if(contaceite2==400):
-        #c1.delete(z)
         can2.move(aceite2,menosaceite2-can2.coords(aceite2)[0],-can2.coords(aceite2)[1])
         contaceite2 = 0
 
@@ -1408,7 +1405,6 @@ def manchitanvl22():#mover minivan
         posx2am2 = can2.coords(aceite2)[0]
         posy2am2 = can2.coords(aceite2)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1xm2>=posx2am2 and posx1xm2<=posx2am2+28 and posy1xm2>=posy2am2 and posy1xm2<=posy2am2+50 or(posx1xm2+28>=posx2am2 and posx1xm2+28<=posx2am2+28 and posy1xm2>=posy2am2 and posy1xm2<=posy2am2+50) ):
             print("crash")
@@ -1432,7 +1428,7 @@ def manchitanvl22():#mover minivan
 ###-----------------------------------------------------------nyan
 def podernvl2 ():
     """
-    esta funcion es para mover el gato de la gasolina
+    esta funcion es para mover el gato de la gasolina del mapa de la izquierda
     """
     global nvl1,y,p,c,z,can2,contadormini,x,contgasonvl2,contvelocidad,contadorpoder,reloadpoder,nyan
     menospoder=random.randint(280,500)
@@ -1451,8 +1447,7 @@ def podernvl2 ():
         posy1ny = can2.coords(x)[1]
         posx2ny = can2.coords(nyan)[0]
         posy2ny = can2.coords(nyan)[1]
-        
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+    
 
         if(posx1ny>=posx2ny and posx1ny<=posx2ny+28 and posy1ny>=posy2ny and posy1ny<=posy2ny+50 or(posx1ny+28>=posx2ny and posx1ny+28<=posx2ny+28 and posy1ny>=posy2ny and posy1ny<=posy2ny+50) ):
             print("crash")
@@ -1466,7 +1461,7 @@ def podernvl2 ():
     
 def podernvl22 ():
     """
-    esta funcion es para mover el gato de la gasolina
+    esta funcion es para mover el gato de la gasolina del mapa de la derecha
     """
     global nvl1,y,p,c,z,can2,contadormini,x,contgasonvl22,contvelocidad,contadorpoder2,reloadpoder2,nyan2
     menospoder2=random.randint(700,980)
@@ -1486,7 +1481,6 @@ def podernvl22 ():
         posx2ny2 = can2.coords(nyan2)[0]
         posy2ny2 = can2.coords(nyan2)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1ny2>=posx2ny2 and posx1ny2<=posx2ny2+28 and posy1ny2>=posy2ny2 and posy1ny2<=posy2ny2+50 or(posx1ny2+28>=posx2ny2 and posx1ny2+28<=posx2ny2+28 and posy1ny2>=posy2ny2 and posy1ny2<=posy2ny2+50) ):
             print("crash")
@@ -1509,7 +1503,7 @@ mapa3=tkinter.PhotoImage(file="mapa3333.png")#imagen del mapa
 ###-----------------------------------------------------------------------------------------------------nivel 3
 def nivel3(): # Abrir la ventana del nivel 3, fusionar funcion de guardado a precionar nivel 3
     """
-    Esta funcion es para abrir una nueva ventana, que abre el mapa del nivel 3
+    Esta funcion es para abrir una nueva ventana, que abre el mapa del nivel 3 y llama las funciones de los enemigos
     """
     global can3,nvl3,mapa2,x,x2,z,gaso,gaso22,puntos,puntos22,velocidad,min2,y,y2,a,run2,fight,fight2,aceite,aceite2,nyan,nyan2
     nvl3 = tkinter.Toplevel(w0)#crear la ventana del nivel 2
@@ -1570,39 +1564,42 @@ def nivel3(): # Abrir la ventana del nivel 3, fusionar funcion de guardado a pre
 
 ###-------------------------------------------------------------players
 def keyy3():
+    """
+    esta funcion es para mover los jugadores del nivel 3
+    """
     global h, playernvl2,i,j,y,i2,x2,nvl3,playernvl22,x,can3
     if(68 in h):
         if(i<150):
             can3.delete(x)
             i = i + 3
             x = can3.create_image(400+i,750+j,image=carro)
-        #else:
-            #c1.delete(x)
-            #x = c1.create_image(400+i,750+j,image=carroc) 
+        else:
+            can3.delete(x)
+            x = can3.create_image(400+i,750+j,image=carroc) 
     if(65 in h):
         if(i > -140):
             can3.delete(x)
             i = i - 3
             x = can3.create_image(400+i,750+j,image=carro)
-        #else:
-            #c1.delete(x)
-            #x = c1.create_image(400+i,750+j,image=carroc)
+        else:
+            can3.delete(x)
+            x = can3.create_image(400+i,750+j,image=carroc)
     if(76 in h):
         if(i2 < 160):
             can3.delete(x2)
             i2 = i2 + 3
             x2 = can3.create_image(830+i2,750+j,image=carro)
-        #else:
-            #c1.delete(x2)
-            #x2 = c1.create_image(830+i2,750+j,image=carroc)
+        else:
+            can3.delete(x2)
+            x2 = can3.create_image(830+i2,750+j,image=carroc)
     if(74 in h):
         if(i2 > -130):
              can3.delete(x2)
              i2 = i2 - 3
              x2 = can3.create_image(830+i2,750+j,image=carro)
-       # else:
-             #c1.delete(x2)
-             #x2 = c1.create_image(830+i2,750+j,image=carroc)
+        else:
+             can3.delete(x2)
+             x2 = can3.create_image(830+i2,750+j,image=carroc)
     if(32 in h):
         guardar3()
     nvl3.after(10,keyy3)
@@ -1620,6 +1617,7 @@ contpuntosnvl33=0
 ####----------------------------------------------------------------------------guardar y cargar
 def guardar3():
     """
+    esta funcion es para guardar la partida del nivel 3
     """
     global h,x,j,i,y,i2,x2,contgasonvl3,contgasonvl33,contpuntosnvl3,contpuntosnvl33,can3,archivo
     archivo = open("partida3.txt", "w")
@@ -1643,6 +1641,7 @@ def guardar3():
     
 def cargar3():
     """
+    esta funcion es para cargar la partida del nivel 3 guardada previamente
     """
     global h,x,j,i,y,i2,x2,contgasonvl3,contgasonvl33,contpuntosnvl3,contpuntosnvl33,can3,archivo
     archivo=open("partida3.txt","r")
@@ -1685,7 +1684,7 @@ def cargar3():
 ###-------------------------------------------------------------minivan
 def mininvl3():#mover minivan
     """
-    Esta funcion mueve la minivan
+    Esta funcion mueve la minivan del mapa de la izquierda
     """
     
     global nvl3,y,p,c,z,can3,contadormini,x,contgasonvl3,contvelocidad
@@ -1695,12 +1694,9 @@ def mininvl3():#mover minivan
         c = c + 1
         
     if(c==280):
-        #c1.delete(z)
-        
         can3.move(z,menos-can3.coords(z)[0],-can3.coords(z)[1])
         c = 0
-        #z=c1.create_image(500,-50,image=minivan)
-
+        
     if(contadormini<950):#250
         
         contadormini = contadormini + 1
@@ -1709,7 +1705,7 @@ def mininvl3():#mover minivan
         posx2 = can3.coords(z)[0]
         posy2 = can3.coords(z)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+        
 
         if(posx1>=posx2 and posx1<=posx2+28 and posy1>=posy2 and posy1<=posy2+50 or(posx1+28>=posx2 and posx1+28<=posx2+28 and posy1>=posy2 and posy1<=posy2+50) ):
             print("crash")
@@ -1727,7 +1723,7 @@ def mininvl3():#mover minivan
             nvl3.after(10,mininvl3)
 def mininvl33():
     """
-    Esta funcion mueve la minivan del segundo mapa
+    Esta funcion mueve la minivan del mapa de la derecha
     """
     
     global nvl3,y,p,c2player,can3,contadormini2,x2,contgasonvl33,contvelocidad22,min2
@@ -1737,11 +1733,9 @@ def mininvl33():
         c2player = c2player + 1
         
     if(c2player==280):
-        #c1.delete(z)
         can3.move(min2,menos2-can3.coords(min2)[0],-can3.coords(min2)[1])
         c2player = 0
-        #z=c1.create_image(500,-50,image=minivan)
-
+        
     if(contadormini2<950):#250
         
         contadormini2 = contadormini2 + 1
@@ -1750,7 +1744,6 @@ def mininvl33():
         posx2m = can3.coords(min2)[0]
         posy2m = can3.coords(min2)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1m>=posx2m and posx1m<=posx2m+28 and posy1m>=posy2m and posy1m<=posy2m+50 or(posx1m+28>=posx2m and posx1m+28<=posx2m+28 and posy1m>=posy2m and posy1m<=posy2m+50) ):
             print("crash")
@@ -1774,31 +1767,31 @@ def mininvl33():
 ###-----------------------------------------------------------------------------gasolina
 def gasolinanvl3():
     """
-    con esta funcion se crea el label de la gasolina
+    con esta funcion se crea el label de la gasolina del mapa de la izquierda y disminuye con el tiempo
     """
     global gaso,nvl3,lbl3,contgasonvl3,can3
     
     
-    if(contgasonvl3>0):
+    if(contgasonvl3>=0):
         gaso.set(str(contgasonvl3)+" "+"G")
         contgasonvl3=contgasonvl3-1
     can3.after(1000,gasolinanvl3)
-    if(contgasonvl3==0):
+    if(contgasonvl3<0):
         nvl3.destroy()
         print("2 win")
     
 def gasolinanvl33():
     """
-    con esta funcion se crea el label de la gasolina
+    con esta funcion se crea el label de la gasolina del mapa de la derecha y disminuye con el tiempo
     """
     global gaso22,nvl3,contgasonvl33
     
     
-    if(contgasonvl33>0):
+    if(contgasonvl33>=0):
         gaso22.set(str(contgasonvl33)+" "+ "G")
         contgasonvl33=contgasonvl33-1
     can3.after(1000,gasolinanvl33)
-    if(contgasonvl33==0):
+    if(contgasonvl33<0):
         nvl3.destroy()
         print("1 win")
 
@@ -1809,7 +1802,7 @@ def gasolinanvl33():
 ####puntos
 def puntosnvl3():
     """
-    control de puntos
+    distancia recorrida del mapa de la izquierda
     """
     global nvl3,contpuntosnvl3,puntos,lblpuntos
     if(contpuntosnvl3>=0):
@@ -1819,7 +1812,7 @@ def puntosnvl3():
 
 def puntosnvl33():
     """
-    control de puntos
+    distancia recorrida del mapa de la derecha
     """
     global nvl3,contpuntosnvl33,puntos22,lblpuntos
     if(contpuntosnvl33>=0):
@@ -1832,7 +1825,7 @@ def puntosnvl33():
 ####velocidad
 def velocidadnvl3():
     """
-    funcion para el label de velocidad
+    funcion para el label de velocidad del mapa de la izquierda
     """
     global nvl3,contvelocidad,velocidad,lblvelocidad
     if(contvelocidad>=0 and contvelocidad<=180):
@@ -1841,7 +1834,7 @@ def velocidadnvl3():
     can3.after(100,velocidadnvl3)
 def velocidadnvl33():
     """
-    funcion para el label de velocidad
+    funcion para el label de velocidad del mapa de la derecha
     """
     global nvl3,contvelocidad22,velocidad22,lblvelocidad
     if(contvelocidad22>=0 and contvelocidad22<=180):
@@ -1853,6 +1846,7 @@ def velocidadnvl33():
 ###--------------------------------------------------------------------fondo
 def fonditonvl3():
     """
+    con esta funcion se mueve el mapa de la izquierda
     """
     global can3,nvl3
     c22=0
@@ -1869,6 +1863,7 @@ def fonditonvl3():
         
 def fonditonvl33():
     """
+    con esta funcion se mueve el mapa de la derecha
     """
     global can3,nvl3
     c222=0
@@ -1887,7 +1882,7 @@ def fonditonvl33():
 ####enemigo runner
 def runernvl3():#mover runner
     """
-    esta funcion es para mover el runer
+    esta funcion es para mover el runer del mapa de la izquierda
     """
     global a,ref1,direccion,contgasonvl3,contvelocidad,contadorruner,x
     menosruner=random.randint(280,500)
@@ -1899,7 +1894,6 @@ def runernvl3():#mover runner
     if(can3.coords(x)[1]==can3.coords(a)[1]):
         can3.move(a,menosruner-can3.coords(a)[0],-can3.coords(a)[1])
     can3.move(a,direccion*3,2)
-    #nvl1.after(10,runer)
     if(contadorruner<950):#250
         
         contadorruner = contadorruner + 1
@@ -1907,8 +1901,6 @@ def runernvl3():#mover runner
         posy1r = can3.coords(x)[1]
         posx2r = can3.coords(a)[0]
         posy2r = can3.coords(a)[1]
-        
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1r>=posx2r and posx1r<=posx2r+28 and posy1r>=posy2r and posy1r<=posy2r+50 or(posx1r+28>=posx2r and posx1r+28<=posx2r+28 and posy1r>=posy2r and posy1r<=posy2r+50) ):
             print("crash")
@@ -1928,7 +1920,7 @@ def runernvl3():#mover runner
 
 def runernvl33():
     """
-runer del nivel 2
+runer del mapa de la derecha
     """
     global run2,ref1,direccion2,contadorruner2,x2,contgasonvl33,contvelocidad22
     menosruner2=random.randint(700,980)
@@ -1948,7 +1940,6 @@ runer del nivel 2
         posx2r2 = can3.coords(run2)[0]
         posy2r2 = can3.coords(run2)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1r2>=posx2r2 and posx1r2<=posx2r2+28 and posy1r2>=posy2r2 and posy1r2<=posy2r2+50 or(posx1r2+28>=posx2r2 and posx1r2+28<=posx2r2+28 and posy1r2>=posy2r2 and posy1r2<=posy2r2+50) ):
             print("crash")
@@ -1970,7 +1961,7 @@ runer del nivel 2
             
 def fighterrnvl3():
     """
-    esta funcion es para mover el fighter
+    esta funcion es para mover el fighter del mapa de la izquierda
     """
     
     global fight,reloadfighter,x,contgasonvl3,contvelocidad,y
@@ -1983,7 +1974,6 @@ def fighterrnvl3():
         can3.move(fight,0,3)
     if(can3.coords(x)[1]==can3.coords(fight)[1]):
         can3.move(fight,menosfighter-can3.coords(fight)[0],-can3.coords(fight)[1])
-        #fight=c1.create_image(500,50,image=fighter)
         
     if(reloadfighter<950):#250
         
@@ -1993,7 +1983,6 @@ def fighterrnvl3():
         posx22 = can3.coords(fight)[0]
         posy22 = can3.coords(fight)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx11>=posx22 and posx11<=posx22+28 and posy11>=posy22 and posy11<=posy22+50 or(posx11+28>=posx22 and posx11+28<=posx22+28 and posy11>=posy22 and posy11<=posy22+50) ):
             print("crash")
@@ -2011,7 +2000,7 @@ def fighterrnvl3():
 
 def fighterrnvl33():
     """
-    esta funcion es para mover el fighter
+    esta funcion es para mover el fighter del mapa de la derecha
     """
     
     global fight2,reloadfighter2,x2,contgasonvl33,contvelocidad22,y
@@ -2024,7 +2013,6 @@ def fighterrnvl33():
         can3.move(fight2,0,2)
     if(can3.coords(x2)[1]==can3.coords(fight2)[1]):
         can3.move(fight2,menosfighter2-can3.coords(fight2)[0],-can3.coords(fight2)[1])
-        #fight=c1.create_image(500,50,image=fighter)
         
     if(reloadfighter2<950):#250
         
@@ -2033,8 +2021,6 @@ def fighterrnvl33():
         posy11f = can3.coords(x2)[1]
         posx22f= can3.coords(fight2)[0]
         posy22f = can3.coords(fight2)[1]
-        
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx11f>=posx22f and posx11f<=posx22f+28 and posy11f>=posy22f and posy11f<=posy22f+50 or(posx11f+28>=posx22f and posx11f+28<=posx22f+28 and posy11f>=posy22f and posy11f<=posy22f+50) ):
             print("crash")
@@ -2049,15 +2035,12 @@ def fighterrnvl33():
         else:
             reloadfighter2=0
             nvl3.after(10,fighterrnvl33)
-        
-        
     
-
 ####---------------------------------------------------fighter
 ####----------------------------------------------------mancha
-def manchitanvl3():#mover minivan
+def manchitanvl3():
     """
-    mancha de aceite
+    mancha de aceite del mapa de la izquierda
     """
     
     global nvl1,y,p,c,z,c1,contadormini,x,contgasonvl3,contvelocidad,aceite,contaceite,resbalar
@@ -2067,7 +2050,7 @@ def manchitanvl3():#mover minivan
         contaceite = contaceite + 1
         
     if(contaceite==380):
-        #c1.delete(z)
+        
         can3.move(aceite,menosaceite-can3.coords(aceite)[0],-can3.coords(aceite)[1])
         contaceite = 0
 
@@ -2079,7 +2062,6 @@ def manchitanvl3():#mover minivan
         posx2a = can3.coords(aceite)[0]
         posy2a = can3.coords(aceite)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1x>=posx2a and posx1x<=posx2a+28 and posy1x>=posy2a and posy1x<=posy2a+50 or(posx1x+28>=posx2a and posx1x+28<=posx2a+28 and posy1x>=posy2a and posy1x<=posy2a+50) ):
             print("crash")
@@ -2099,7 +2081,7 @@ def manchitanvl3():#mover minivan
             
 def manchitanvl33():#mover minivan
     """
-    mancha de aceite 2
+    mancha de aceite del mapa de la derecha
     """
     
     global nvl1,y,p,c1,x2,contgasonvl33,contvelocidad22,aceite2,contaceite2,resbalar2
@@ -2109,7 +2091,6 @@ def manchitanvl33():#mover minivan
         contaceite2 = contaceite2 + 1
         
     if(contaceite2==380):
-        #c1.delete(z)
         can3.move(aceite2,menosaceite2-can3.coords(aceite2)[0],-can3.coords(aceite2)[1])
         contaceite2 = 0
 
@@ -2121,7 +2102,6 @@ def manchitanvl33():#mover minivan
         posx2am2 = can3.coords(aceite2)[0]
         posy2am2 = can3.coords(aceite2)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1xm2>=posx2am2 and posx1xm2<=posx2am2+28 and posy1xm2>=posy2am2 and posy1xm2<=posy2am2+50 or(posx1xm2+28>=posx2am2 and posx1xm2+28<=posx2am2+28 and posy1xm2>=posy2am2 and posy1xm2<=posy2am2+50) ):
             print("crash")
@@ -2144,7 +2124,7 @@ def manchitanvl33():#mover minivan
 ###-----------------------------------------------------------nyan
 def podernvl3 ():
     """
-    esta funcion es para mover el gato de la gasolina
+    esta funcion es para mover el gato de la gasolina del mapa de la izquierda
     """
     global nvl3,y,p,c,z,can2,contadormini,x,contgasonvl3,contvelocidad,contadorpoder,reloadpoder,nyan
     menospoder=random.randint(280,500)
@@ -2164,7 +2144,6 @@ def podernvl3 ():
         posx2ny = can3.coords(nyan)[0]
         posy2ny = can3.coords(nyan)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1ny>=posx2ny and posx1ny<=posx2ny+28 and posy1ny>=posy2ny and posy1ny<=posy2ny+50 or(posx1ny+28>=posx2ny and posx1ny+28<=posx2ny+28 and posy1ny>=posy2ny and posy1ny<=posy2ny+50) ):
             print("crash")
@@ -2178,7 +2157,7 @@ def podernvl3 ():
     
 def podernvl33 ():
     """
-    esta funcion es para mover el gato de la gasolina
+    esta funcion es para mover el gato de la gasolina del mapa de la derecha
     """
     global nvl3,y,p,c,z,can2,contadormini,x,contgasonvl33,contvelocidad,contadorpoder2,reloadpoder2,nyan2
     menospoder2=random.randint(700,980)
@@ -2197,8 +2176,7 @@ def podernvl33 ():
         posy1ny2 = can3.coords(x2)[1]
         posx2ny2 = can3.coords(nyan2)[0]
         posy2ny2 = can3.coords(nyan2)[1]
-        
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
+    
 
         if(posx1ny2>=posx2ny2 and posx1ny2<=posx2ny2+28 and posy1ny2>=posy2ny2 and posy1ny2<=posy2ny2+50 or(posx1ny2+28>=posx2ny2 and posx1ny2+28<=posx2ny2+28 and posy1ny2>=posy2ny2 and posy1ny2<=posy2ny2+50) ):
             print("crash")
@@ -2224,7 +2202,7 @@ mapa4=tkinter.PhotoImage(file="mapa4444.png")#imagen del mapa
     
 def nivel4(): # Abrir la ventana del nivel 4, fusionar funcion de guardado a presionar nivel 4
     """
-    Esta funcion es para abrir una nueva ventana, que abre el mapa del nivel 4
+    Esta funcion es para abrir una nueva ventana, que abre el mapa del nivel 4 y carga las funciones de los enemigos
     """
     global can4,nvl4,mapa2,x,x2,z,gaso,gaso22,puntos,puntos22,velocidad,min2,y,y2,a,run2,fight,fight2,aceite,aceite2,nyan,nyan2
     nvl4 = tkinter.Toplevel(w0)#crear la ventana del nivel 2
@@ -2285,45 +2263,45 @@ def nivel4(): # Abrir la ventana del nivel 4, fusionar funcion de guardado a pre
 
 ###-------------------------------------------------------------players
 def keyy4():
+    """
+esta funcion es para mover los jugadores del nivel 4
+    """
     global h, playernvl2,i,j,y,i2,x2,nvl4,playernvl22,x,can4
     if(68 in h):
         if(i<150):
             can4.delete(x)
             i = i + 3
             x = can4.create_image(400+i,750+j,image=carro)
-        #else:
-            #c1.delete(x)
-            #x = c1.create_image(400+i,750+j,image=carroc) 
+        else:
+            can4.delete(x)
+            x = can4.create_image(400+i,750+j,image=carroc) 
     if(65 in h):
         if(i > -140):
             can4.delete(x)
             i = i - 3
             x = can4.create_image(400+i,750+j,image=carro)
-        #else:
-            #c1.delete(x)
-            #x = c1.create_image(400+i,750+j,image=carroc)
+        else:
+            can4.delete(x)
+            x = can4.create_image(400+i,750+j,image=carroc)
     if(76 in h):
         if(i2 < 160):
             can4.delete(x2)
             i2 = i2 + 3
             x2 = can4.create_image(830+i2,750+j,image=carro)
-        #else:
-            #c1.delete(x2)
-            #x2 = c1.create_image(830+i2,750+j,image=carroc)
+        else:
+            can4.delete(x2)
+            x2 = can4.create_image(830+i2,750+j,image=carroc)
     if(74 in h):
         if(i2 > -130):
              can4.delete(x2)
              i2 = i2 - 3
              x2 = can4.create_image(830+i2,750+j,image=carro)
-       # else:
-             #c1.delete(x2)
-             #x2 = c1.create_image(830+i2,750+j,image=carroc)
+        else:
+             can4.delete(x2)
+             x2 = can4.create_image(830+i2,750+j,image=carroc)
     if(32 in h):
         guardar4()
     nvl4.after(10,keyy4)
-
-
-
 
 ###-------------------------------------------------------------players
 ###contadores
@@ -2335,6 +2313,7 @@ contpuntosnvl44=0
 ####----------------------------------------------------------------------------guardar y cargar
 def guardar4():
     """
+    esta funcion es para guardar la partida del nivel 4
     """
     global h,x,j,i,y,i2,x2,contgasonvl4,contgasonvl44,contpuntosnvl4,contpuntosnvl44,can4,archivo
     archivo = open("partida4.txt", "w")
@@ -2358,6 +2337,7 @@ def guardar4():
     
 def cargar4():
     """
+    esta funcion es para cargar la partida guardada previamente
     """
     global h,x,j,i,y,i2,x2,contgasonvl4,contgasonvl44,contpuntosnvl4,contpuntosnvl44,can4,archivo
     archivo=open("partida4.txt","r")
@@ -2399,7 +2379,7 @@ def cargar4():
 ###-------------------------------------------------------------minivan
 def mininvl4():#mover minivan
     """
-    Esta funcion mueve la minivan
+    Esta funcion mueve la minivan del mapa de la izquierda
     """
     
     global nvl4,y,p,c,z,can4,contadormini,x,contgasonvl4,contvelocidad
@@ -2409,11 +2389,9 @@ def mininvl4():#mover minivan
         c = c + 1
         
     if(c==240):
-        #c1.delete(z)
-        
         can4.move(z,menos-can4.coords(z)[0],-can4.coords(z)[1])
         c = 0
-        #z=c1.create_image(500,-50,image=minivan)
+        
 
     if(contadormini<950):#250
         
@@ -2423,7 +2401,6 @@ def mininvl4():#mover minivan
         posx2 = can4.coords(z)[0]
         posy2 = can4.coords(z)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1>=posx2 and posx1<=posx2+28 and posy1>=posy2 and posy1<=posy2+50 or(posx1+28>=posx2 and posx1+28<=posx2+28 and posy1>=posy2 and posy1<=posy2+50) ):
             print("crash")
@@ -2441,7 +2418,7 @@ def mininvl4():#mover minivan
             nvl4.after(10,mininvl4)
 def mininvl44():
     """
-    Esta funcion mueve la minivan del segundo mapa
+    Esta funcion mueve la minivan del mapa de la derecha
     """
     
     global nvl4,y,p,c2player,can4,contadormini2,x2,contgasonvl44,contvelocidad22,min2
@@ -2451,10 +2428,8 @@ def mininvl44():
         c2player = c2player + 1
         
     if(c2player==240):
-        #c1.delete(z)
         can4.move(min2,menos2-can4.coords(min2)[0],-can4.coords(min2)[1])
         c2player = 0
-        #z=c1.create_image(500,-50,image=minivan)
 
     if(contadormini2<950):#250
         
@@ -2464,7 +2439,6 @@ def mininvl44():
         posx2m = can4.coords(min2)[0]
         posy2m = can4.coords(min2)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1m>=posx2m and posx1m<=posx2m+28 and posy1m>=posy2m and posy1m<=posy2m+50 or(posx1m+28>=posx2m and posx1m+28<=posx2m+28 and posy1m>=posy2m and posy1m<=posy2m+50) ):
             print("crash")
@@ -2481,36 +2455,33 @@ def mininvl44():
             contadormini2=0
             nvl4.after(10,mininvl44)
 
-
 ###---------------------------------------------------------------minivan
 ###-----------------------------------------------------------------------------gasolina
 def gasolinanvl4():
     """
-    con esta funcion se crea el label de la gasolina
+    con esta funcion se crea el label de la gasolina del jugador de la izquierda y disminuye con el tiempo
     """
     global gaso,nvl4,lbl3,contgasonvl4,can4
     
     
-    if(contgasonvl4>0):
+    if(contgasonvl4>=0):
         gaso.set(str(contgasonvl4)+" "+"G")
         contgasonvl4=contgasonvl4-1
     can4.after(1000,gasolinanvl4)
-    if(contgasonvl4==0):
+    if(contgasonvl4<0):
         nvl4.destroy()
         print("2 win")
     
 def gasolinanvl44():
     """
-    con esta funcion se crea el label de la gasolina
+    con esta funcion se crea el label de la gasolina del jugador de la derecha y disminuye con el tiempo
     """
     global gaso22,nvl4,contgasonvl44
-    
-    
-    if(contgaso22>0):
+    if(contgaso22>=0):
         gaso22.set(str(contgasonvl44)+" "+ "G")
         contgasonvl44=contgasonvl44-1
     can4.after(1000,gasolinanvl44)
-    if(contgasonvl44==0):
+    if(contgasonvl44<0):
         nvl4.destroy()
         print("1 win")
 
@@ -2519,7 +2490,7 @@ def gasolinanvl44():
 ####puntos
 def puntosnvl4():
     """
-    control de puntos
+   funcion para medir distancia recorrida del jugador de la izquierda
     """
     global nvl4,contpuntosnvl4,puntos,lblpuntos
     if(contpuntosnvl4>=0):
@@ -2529,7 +2500,7 @@ def puntosnvl4():
 
 def puntosnvl44():
     """
-    control de puntos
+    funcion para medir la distancia recorrida por el jugador de la derecha
     """
     global nvl4,contpuntosnvl44,puntos22,lblpuntos
     if(contpuntosnvl44>=0):
@@ -2542,7 +2513,7 @@ def puntosnvl44():
 ####velocidad
 def velocidadnvl4():
     """
-    funcion para el label de velocidad
+    funcion para el label de velocidad del jugador de la izquierda
     """
     global nvl4,contvelocidad,velocidad,lblvelocidad
     if(contvelocidad>=0 and contvelocidad<=180):
@@ -2551,7 +2522,7 @@ def velocidadnvl4():
     can4.after(100,velocidadnvl4)
 def velocidadnvl44():
     """
-    funcion para el label de velocidad
+    funcion para el label de velocidad del jugador de la derecha
     """
     global nvl4,contvelocidad22,velocidad22,lblvelocidad
     if(contvelocidad22>=0 and contvelocidad22<=180):
@@ -2563,6 +2534,7 @@ def velocidadnvl44():
 ###--------------------------------------------------------------------fondo
 def fonditonvl4():
     """
+funcion para mover el mapa de la izquierda
     """
     global can4,nvl4
     c22=0
@@ -2579,6 +2551,7 @@ def fonditonvl4():
         
 def fonditonvl44():
     """
+    funcion para mover el mapa de la derecha
     """
     global can4,nvl4
     c222=0
@@ -2597,7 +2570,7 @@ def fonditonvl44():
 ####enemigo runner
 def runernvl4():#mover runner
     """
-    esta funcion es para mover el runer
+    esta funcion es para mover el runer del mapa de la izquierda
     """
     global a,ref1,direccion,contgasonvl4,contvelocidad,contadorruner,x
     menosruner=random.randint(280,500)
@@ -2609,7 +2582,6 @@ def runernvl4():#mover runner
     if(can4.coords(x)[1]==can4.coords(a)[1]):
         can4.move(a,menosruner-can4.coords(a)[0],-can4.coords(a)[1])
     can4.move(a,direccion*5,2)
-    #nvl1.after(10,runer)
     if(contadorruner<950):#250
         
         contadorruner = contadorruner + 1
@@ -2618,7 +2590,6 @@ def runernvl4():#mover runner
         posx2r = can4.coords(a)[0]
         posy2r = can4.coords(a)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1r>=posx2r and posx1r<=posx2r+28 and posy1r>=posy2r and posy1r<=posy2r+50 or(posx1r+28>=posx2r and posx1r+28<=posx2r+28 and posy1r>=posy2r and posy1r<=posy2r+50) ):
             print("crash")
@@ -2638,7 +2609,7 @@ def runernvl4():#mover runner
 
 def runernvl44():
     """
-runer del nivel 2
+funcion para mover el runer del mapa de la derecha
     """
     global run2,ref1,direccion2,contadorruner2,x2,contgasonvl44,contvelocidad22
     menosruner2=random.randint(700,980)
@@ -2658,7 +2629,6 @@ runer del nivel 2
         posx2r2 = can4.coords(run2)[0]
         posy2r2 = can4.coords(run2)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1r2>=posx2r2 and posx1r2<=posx2r2+28 and posy1r2>=posy2r2 and posy1r2<=posy2r2+50 or(posx1r2+28>=posx2r2 and posx1r2+28<=posx2r2+28 and posy1r2>=posy2r2 and posy1r2<=posy2r2+50) ):
             print("crash")
@@ -2680,7 +2650,7 @@ runer del nivel 2
             
 def fighterrnvl4():
     """
-    esta funcion es para mover el fighter
+    esta funcion es para mover el fighter del mapa de la izquierda
     """
     
     global fight,reloadfighter,x,contgasonvl4,contvelocidad,y
@@ -2693,7 +2663,6 @@ def fighterrnvl4():
         can4.move(fight,0,4)
     if(can4.coords(x)[1]==can4.coords(fight)[1]):
         can4.move(fight,menosfighter-can4.coords(fight)[0],-can4.coords(fight)[1])
-        #fight=c1.create_image(500,50,image=fighter)
         
     if(reloadfighter<950):#250
         
@@ -2703,7 +2672,6 @@ def fighterrnvl4():
         posx22 = can4.coords(fight)[0]
         posy22 = can4.coords(fight)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx11>=posx22 and posx11<=posx22+28 and posy11>=posy22 and posy11<=posy22+50 or(posx11+28>=posx22 and posx11+28<=posx22+28 and posy11>=posy22 and posy11<=posy22+50) ):
             print("crash")
@@ -2721,7 +2689,7 @@ def fighterrnvl4():
 
 def fighterrnvl44():
     """
-    esta funcion es para mover el fighter
+    esta funcion es para mover el fighter del mapa de la derecha
     """
     
     global fight2,reloadfighter2,x2,contgasonvl44,contvelocidad22,y
@@ -2734,7 +2702,7 @@ def fighterrnvl44():
         can4.move(fight2,0,4)
     if(can4.coords(x2)[1]==can4.coords(fight2)[1]):
         can4.move(fight2,menosfighter2-can4.coords(fight2)[0],-can4.coords(fight2)[1])
-        #fight=c1.create_image(500,50,image=fighter)
+
         
     if(reloadfighter2<950):#250
         
@@ -2744,7 +2712,6 @@ def fighterrnvl44():
         posx22f= can4.coords(fight2)[0]
         posy22f = can4.coords(fight2)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx11f>=posx22f and posx11f<=posx22f+28 and posy11f>=posy22f and posy11f<=posy22f+50 or(posx11f+28>=posx22f and posx11f+28<=posx22f+28 and posy11f>=posy22f and posy11f<=posy22f+50) ):
             print("crash")
@@ -2765,9 +2732,9 @@ def fighterrnvl44():
 
 ####---------------------------------------------------fighter
 ####----------------------------------------------------mancha
-def manchitanvl4():#mover minivan
+def manchitanvl4():
     """
-    mancha de aceite
+   funcion para mover la  mancha de aceite del mapa de la izquierda
     """
     
     global nvl4,y,p,c,z,can4,contadormini,x,contgasonvl4,contvelocidad,aceite,contaceite,resbalar
@@ -2777,7 +2744,6 @@ def manchitanvl4():#mover minivan
         contaceite = contaceite + 1
         
     if(contaceite==340):
-        #c1.delete(z)
         can4.move(aceite,menosaceite-can4.coords(aceite)[0],-can4.coords(aceite)[1])
         contaceite = 0
 
@@ -2789,7 +2755,6 @@ def manchitanvl4():#mover minivan
         posx2a = can4.coords(aceite)[0]
         posy2a = can4.coords(aceite)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1x>=posx2a and posx1x<=posx2a+28 and posy1x>=posy2a and posy1x<=posy2a+50 or(posx1x+28>=posx2a and posx1x+28<=posx2a+28 and posy1x>=posy2a and posy1x<=posy2a+50) ):
             print("crash")
@@ -2807,9 +2772,9 @@ def manchitanvl4():#mover minivan
             resbalar=0
             nvl4.after(10,manchitanvl4)
             
-def manchitanvl44():#mover minivan
+def manchitanvl44():
     """
-    mancha de aceite 2
+    funcion para mover la mancha de aceite del mapa de la derecha
     """
     
     global nvl4,y,p,can4,x2,contgasonvl44,contvelocidad22,aceite2,contaceite2,resbalar2
@@ -2819,7 +2784,6 @@ def manchitanvl44():#mover minivan
         contaceite2 = contaceite2 + 1
         
     if(contaceite2==340):
-        #c1.delete(z)
         can4.move(aceite2,menosaceite2-can4.coords(aceite2)[0],-can4.coords(aceite2)[1])
         contaceite2 = 0
 
@@ -2831,7 +2795,6 @@ def manchitanvl44():#mover minivan
         posx2am2 = can4.coords(aceite2)[0]
         posy2am2 = can4.coords(aceite2)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1xm2>=posx2am2 and posx1xm2<=posx2am2+28 and posy1xm2>=posy2am2 and posy1xm2<=posy2am2+50 or(posx1xm2+28>=posx2am2 and posx1xm2+28<=posx2am2+28 and posy1xm2>=posy2am2 and posy1xm2<=posy2am2+50) ):
             print("crash")
@@ -2854,7 +2817,7 @@ def manchitanvl44():#mover minivan
 ###-----------------------------------------------------------nyan
 def podernvl4 ():
     """
-    esta funcion es para mover el gato de la gasolina
+    esta funcion es para mover el gato de la gasolina del mapa de la izquierda
     """
     global nvl4,y,p,c,z,can4,contadormini,x,contgasonvl4,contvelocidad,contadorpoder,reloadpoder,nyan
     menospoder=random.randint(280,500)
@@ -2873,8 +2836,6 @@ def podernvl4 ():
         posy1ny = can4.coords(x)[1]
         posx2ny = can4.coords(nyan)[0]
         posy2ny = can4.coords(nyan)[1]
-        
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1ny>=posx2ny and posx1ny<=posx2ny+28 and posy1ny>=posy2ny and posy1ny<=posy2ny+50 or(posx1ny+28>=posx2ny and posx1ny+28<=posx2ny+28 and posy1ny>=posy2ny and posy1ny<=posy2ny+50) ):
             print("crash")
@@ -2888,7 +2849,7 @@ def podernvl4 ():
     
 def podernvl44 ():
     """
-    esta funcion es para mover el gato de la gasolina
+    esta funcion es para mover el gato de la gasolina del mapa de la derecha
     """
     global nvl4,y,p,c,z,can4,contadormini,x,contgasonvl44,contvelocidad,contadorpoder2,reloadpoder2,nyan2
     menospoder2=random.randint(700,980)
@@ -2907,8 +2868,6 @@ def podernvl44 ():
         posy1ny2 = can4.coords(x2)[1]
         posx2ny2 = can4.coords(nyan2)[0]
         posy2ny2 = can4.coords(nyan2)[1]
-        
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1ny2>=posx2ny2 and posx1ny2<=posx2ny2+28 and posy1ny2>=posy2ny2 and posy1ny2<=posy2ny2+50 or(posx1ny2+28>=posx2ny2 and posx1ny2+28<=posx2ny2+28 and posy1ny2>=posy2ny2 and posy1ny2<=posy2ny2+50) ):
             print("crash")
@@ -2921,9 +2880,6 @@ def podernvl44 ():
             nvl4.after(10,podernvl44)    
 
 ###-------------------------------------------------------------nyan
-
-
-
 ###-----------------------------------------------------------------------------------------------------------nivel4
 ###---mapa
 mapa5=tkinter.PhotoImage(file="mapa5555.png")#imagen del mapa
@@ -2934,7 +2890,7 @@ mapa5=tkinter.PhotoImage(file="mapa5555.png")#imagen del mapa
     
 def nivel5(): # Abrir la ventana del nivel 5, fusionar funcion de guardado a precionar nivel 5
     """
-    Esta funcion es para abrir una nueva ventana, que abre el mapa del nivel 5
+    Esta funcion es para abrir una nueva ventana, que abre el mapa del nivel 5 y carga todas las funciones de los enemigos
     """
     global can5,nvl5,mapa2,x,x2,z,gaso,gaso22,puntos,puntos22,velocidad,min2,y,y2,a,run2,fight,fight2,aceite,aceite2,nyan,nyan2
     nvl5 = tkinter.Toplevel(w0)#crear la ventana del nivel 2
@@ -2995,45 +2951,45 @@ def nivel5(): # Abrir la ventana del nivel 5, fusionar funcion de guardado a pre
     
 ###-------------------------------------------------------------players
 def keyy5():
+    """
+    funcion para mover los jugadores del nivel5
+    """
     global h, playernvl2,i,j,y,i2,x2,nvl5,playernvl22,x,can5
     if(68 in h):
         if(i<150):
             can5.delete(x)
             i = i + 3
             x = can5.create_image(400+i,750+j,image=carro)
-        #else:
-            #c1.delete(x)
-            #x = c1.create_image(400+i,750+j,image=carroc) 
+        else:
+            can5.delete(x)
+            x = can5.create_image(400+i,750+j,image=carroc) 
     if(65 in h):
         if(i > -140):
             can5.delete(x)
             i = i - 3
             x = can5.create_image(400+i,750+j,image=carro)
-        #else:
-            #c1.delete(x)
-            #x = c1.create_image(400+i,750+j,image=carroc)
+        else:
+            can5.delete(x)
+            x = can5.create_image(400+i,750+j,image=carroc)
     if(76 in h):
         if(i2 < 160):
             can5.delete(x2)
             i2 = i2 + 3
             x2 = can5.create_image(830+i2,750+j,image=carro)
-        #else:
-            #c1.delete(x2)
-            #x2 = c1.create_image(830+i2,750+j,image=carroc)
+        else:
+            can5.delete(x2)
+            x2 = can5.create_image(830+i2,750+j,image=carroc)
     if(74 in h):
         if(i2 > -130):
              can5.delete(x2)
              i2 = i2 - 3
              x2 = can5.create_image(830+i2,750+j,image=carro)
-       # else:
-             #c1.delete(x2)
-             #x2 = c1.create_image(830+i2,750+j,image=carroc)
+        else:
+             can5.delete(x2)
+             x2 = can5.create_image(830+i2,750+j,image=carroc)
     if(32 in h):
         guardar5()
     nvl5.after(10,keyy5)
-
-
-
 
 ###-------------------------------------------------------------players
 ###contadores
@@ -3045,6 +3001,7 @@ contpuntosnvl55=0
 ####----------------------------------------------------------------------------guardar y cargar
 def guardar5():
     """
+    con esta funcion se guarda la distancia y gasolina de los dos jugadores
     """
     global h,x,j,i,y,i2,x2,contgasonvl5,contgasonvl55,contpuntosnvl5,contpuntosnvl55,can5,archivo
     archivo = open("partida5.txt", "w")
@@ -3068,6 +3025,7 @@ def guardar5():
     
 def cargar5():
     """
+    con esta funcion se carga la partida guardada previamente
     """
     global h,x,j,i,y,i2,x2,contgasonvl5,contgasonvl55,contpuntosnvl5,contpuntosnvl55,can5,archivo
     archivo=open("partida5.txt","r")
@@ -3109,7 +3067,7 @@ def cargar5():
 ###-------------------------------------------------------------minivan
 def mininvl5():#mover minivan
     """
-    Esta funcion mueve la minivan
+    Esta funcion mueve la minivan del mapa de la izquierda
     """
     
     global nvl5,y,p,c,z,can5,contadormini,x,contgasonvl5,contvelocidad
@@ -3119,11 +3077,9 @@ def mininvl5():#mover minivan
         c = c + 1
         
     if(c==180):
-        #c1.delete(z)
-        
         can5.move(z,menos-can5.coords(z)[0],-can5.coords(z)[1])
         c = 0
-        #z=c1.create_image(500,-50,image=minivan)
+        
 
     if(contadormini<950):#250
         
@@ -3133,7 +3089,6 @@ def mininvl5():#mover minivan
         posx2 = can5.coords(z)[0]
         posy2 = can5.coords(z)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1>=posx2 and posx1<=posx2+28 and posy1>=posy2 and posy1<=posy2+50 or(posx1+28>=posx2 and posx1+28<=posx2+28 and posy1>=posy2 and posy1<=posy2+50) ):
             print("crash")
@@ -3151,7 +3106,7 @@ def mininvl5():#mover minivan
             nvl5.after(10,mininvl5)
 def mininvl55():
     """
-    Esta funcion mueve la minivan del segundo mapa
+    Esta funcion mueve la minivan del mapa de la derecha
     """
     
     global nvl5,y,p,c2player,can5,contadormini2,x2,contgasonvl55,contvelocidad22,min2
@@ -3161,11 +3116,9 @@ def mininvl55():
         c2player = c2player + 1
         
     if(c2player==180):
-        #c1.delete(z)
         can5.move(min2,menos2-can5.coords(min2)[0],-can5.coords(min2)[1])
         c2player = 0
-        #z=c1.create_image(500,-50,image=minivan)
-
+    
     if(contadormini2<950):#250
         
         contadormini2 = contadormini2 + 1
@@ -3174,7 +3127,6 @@ def mininvl55():
         posx2m = can5.coords(min2)[0]
         posy2m = can5.coords(min2)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1m>=posx2m and posx1m<=posx2m+28 and posy1m>=posy2m and posy1m<=posy2m+50 or(posx1m+28>=posx2m and posx1m+28<=posx2m+28 and posy1m>=posy2m and posy1m<=posy2m+50) ):
             print("crash")
@@ -3197,31 +3149,31 @@ def mininvl55():
 ###-----------------------------------------------------------------------------gasolina
 def gasolinanvl5():
     """
-    con esta funcion se crea el label de la gasolina
+    con esta funcion se crea el label de la gasolina del jugador de la izquierda y disminuye con el tiempo
     """
     global gaso,nvl5,lbl3,contgasonvl5,can5
     
     
-    if(contgasonvl5>0):
+    if(contgasonvl5>=0):
         gaso.set(str(contgasonvl5)+" "+"G")
         contgasonvl5=contgasonvl5-1
     can5.after(1000,gasolinanvl5)
-    if(contgasonvl5==0):
+    if(contgasonvl5<0):
         nvl5.destroy()
         print("2 win")
     
 def gasolinanvl55():
     """
-    con esta funcion se crea el label de la gasolina
+    con esta funcion se crea el label de la gasolina del jugador de la derecha y disminuye con el tiempo
     """
     global gaso22,nvl5,contgasonvl55
     
     
-    if(contgasonvl55>0):
+    if(contgasonvl55>=0):
         gaso22.set(str(contgasonvl55)+" "+ "G")
         contgasonvl55=contgasonvl55-1
     can5.after(1000,gasolinanvl55)
-    if(contgasonvl55==0):
+    if(contgasonvl55<0):
         nvl5.destroy()
         print("1 win")
 
@@ -3230,7 +3182,7 @@ def gasolinanvl55():
 ####puntos
 def puntosnvl5():
     """
-    control de puntos
+    funcion para medir la distancia recorrida del jugador de la izquierda
     """
     global nvl5,contpuntosnvl5,puntos,lblpuntos
     if(contpuntosnvl5>=0):
@@ -3240,7 +3192,7 @@ def puntosnvl5():
 
 def puntosnvl55():
     """
-    control de puntos
+    funcion para medir la distancia recorrida del jugador de la derecha
     """
     global nvl5,contpuntosnvl55,puntos22,lblpuntos
     if(contpuntosnvl55>=0):
@@ -3254,7 +3206,7 @@ def puntosnvl55():
 ####velocidad
 def velocidadnvl5():
     """
-    funcion para el label de velocidad
+    funcion para el label de velocidad del jugador de la izquierda
     """
     global nvl5,contvelocidad,velocidad,lblvelocidad
     if(contvelocidad>=0 and contvelocidad<=180):
@@ -3263,7 +3215,7 @@ def velocidadnvl5():
     can5.after(100,velocidadnvl5)
 def velocidadnvl55():
     """
-    funcion para el label de velocidad
+    funcion para el label de velocidad del jugador de la derecha
     """
     global nvl5,contvelocidad22,velocidad22,lblvelocidad
     if(contvelocidad22>=0 and contvelocidad22<=180):
@@ -3275,6 +3227,7 @@ def velocidadnvl55():
 ###--------------------------------------------------------------------fondo
 def fonditonvl5():
     """
+    esta funcion mueve el mapa de la izquierda del nivel 5
     """
     global can5,nvl5
     c22=0
@@ -3291,6 +3244,7 @@ def fonditonvl5():
         
 def fonditonvl55():
     """
+    esta funcion mueve el mapa de la derecha del nivel 5
     """
     global can5,nvl5
     c222=0
@@ -3305,13 +3259,11 @@ def fonditonvl55():
         can5.move(y2,0,-can5.coords(y2)[1])
     nvl5.after(1,fonditonvl55)
 ###------------------------------------------------------------------fondo
-
-
 ###---------------------------------------------------------------------runner
 ####enemigo runner
 def runernvl5():#mover runner
     """
-    esta funcion es para mover el runer
+    esta funcion es para mover el runer del mapa de la izquierda
     """
     global a,ref1,direccion,contgasonvl5,contvelocidad,contadorruner,x
     menosruner=random.randint(280,500)
@@ -3323,7 +3275,6 @@ def runernvl5():#mover runner
     if(can5.coords(x)[1]==can5.coords(a)[1]):
         can5.move(a,menosruner-can5.coords(a)[0],-can5.coords(a)[1])
     can5.move(a,direccion*9,5)
-    #nvl1.after(10,runer)
     if(contadorruner<950):#250
         
         contadorruner = contadorruner + 1
@@ -3332,7 +3283,6 @@ def runernvl5():#mover runner
         posx2r = can5.coords(a)[0]
         posy2r = can5.coords(a)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1r>=posx2r and posx1r<=posx2r+28 and posy1r>=posy2r and posy1r<=posy2r+50 or(posx1r+28>=posx2r and posx1r+28<=posx2r+28 and posy1r>=posy2r and posy1r<=posy2r+50) ):
             print("crash")
@@ -3352,7 +3302,7 @@ def runernvl5():#mover runner
 
 def runernvl55():
     """
-runer del nivel 2
+    funcion para mover el runer del mapa de la derecha
     """
     global run2,ref1,direccion2,contadorruner2,x2,contgasonvl55,contvelocidad22
     menosruner2=random.randint(700,980)
@@ -3372,7 +3322,6 @@ runer del nivel 2
         posx2r2 = can5.coords(run2)[0]
         posy2r2 = can5.coords(run2)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1r2>=posx2r2 and posx1r2<=posx2r2+28 and posy1r2>=posy2r2 and posy1r2<=posy2r2+50 or(posx1r2+28>=posx2r2 and posx1r2+28<=posx2r2+28 and posy1r2>=posy2r2 and posy1r2<=posy2r2+50) ):
             print("crash")
@@ -3387,14 +3336,13 @@ runer del nivel 2
         else:
             contadorruner2=0
             nvl5.after(10,runernvl55)
-    
 
 ###-------------------------------------------------------------------runner
 ######--------------------------------------------------------------fighter
             
 def fighterrnvl5():
     """
-    esta funcion es para mover el fighter
+    esta funcion es para mover el fighter del mapa de la izquierda
     """
     
     global fight,reloadfighter,x,contgasonvl5,contvelocidad,y
@@ -3407,7 +3355,6 @@ def fighterrnvl5():
         can5.move(fight,0,7)
     if(can5.coords(x)[1]==can5.coords(fight)[1]):
         can5.move(fight,menosfighter-can5.coords(fight)[0],-can5.coords(fight)[1])
-        #fight=c1.create_image(500,50,image=fighter)
         
     if(reloadfighter<950):#250
         
@@ -3416,8 +3363,6 @@ def fighterrnvl5():
         posy11 = can5.coords(x)[1]
         posx22 = can5.coords(fight)[0]
         posy22 = can5.coords(fight)[1]
-        
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx11>=posx22 and posx11<=posx22+28 and posy11>=posy22 and posy11<=posy22+50 or(posx11+28>=posx22 and posx11+28<=posx22+28 and posy11>=posy22 and posy11<=posy22+50) ):
             print("crash")
@@ -3435,7 +3380,7 @@ def fighterrnvl5():
 
 def fighterrnvl55():
     """
-    esta funcion es para mover el fighter
+    esta funcion es para mover el fighter del mapa de la derecha
     """
     
     global fight2,reloadfighter2,x2,contgasonvl55,contvelocidad22,y
@@ -3448,7 +3393,6 @@ def fighterrnvl55():
         can5.move(fight2,0,7)
     if(can5.coords(x2)[1]==can5.coords(fight2)[1]):
         can5.move(fight2,menosfighter2-can5.coords(fight2)[0],-can5.coords(fight2)[1])
-        #fight=c1.create_image(500,50,image=fighter)
         
     if(reloadfighter2<950):#250
         
@@ -3457,8 +3401,6 @@ def fighterrnvl55():
         posy11f = can5.coords(x2)[1]
         posx22f= can5.coords(fight2)[0]
         posy22f = can5.coords(fight2)[1]
-        
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx11f>=posx22f and posx11f<=posx22f+28 and posy11f>=posy22f and posy11f<=posy22f+50 or(posx11f+28>=posx22f and posx11f+28<=posx22f+28 and posy11f>=posy22f and posy11f<=posy22f+50) ):
             print("crash")
@@ -3473,15 +3415,12 @@ def fighterrnvl55():
         else:
             reloadfighter2=0
             nvl5.after(10,fighterrnvl55)
-        
-        
-    
 
 ####---------------------------------------------------fighter
 ####----------------------------------------------------mancha
-def manchitanvl5():#mover minivan
+def manchitanvl5():
     """
-    mancha de aceite
+    funcion para mover la mancha de aceite del mapa de la izquierda
     """
     
     global nvl5,y,p,c,z,can5,contadormini,x,contgasonvl5,contvelocidad,aceite,contaceite,resbalar
@@ -3491,7 +3430,6 @@ def manchitanvl5():#mover minivan
         contaceite = contaceite + 1
         
     if(contaceite==320):
-        #c1.delete(z)
         can5.move(aceite,menosaceite-can5.coords(aceite)[0],-can5.coords(aceite)[1])
         contaceite = 0
 
@@ -3502,8 +3440,6 @@ def manchitanvl5():#mover minivan
         posy1x = can5.coords(x)[1]
         posx2a = can5.coords(aceite)[0]
         posy2a = can5.coords(aceite)[1]
-        
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1x>=posx2a and posx1x<=posx2a+28 and posy1x>=posy2a and posy1x<=posy2a+50 or(posx1x+28>=posx2a and posx1x+28<=posx2a+28 and posy1x>=posy2a and posy1x<=posy2a+50) ):
             print("crash")
@@ -3521,9 +3457,9 @@ def manchitanvl5():#mover minivan
             resbalar=0
             nvl5.after(10,manchitanvl5)
             
-def manchitanvl55():#mover minivan
+def manchitanvl55():
     """
-    mancha de aceite 2
+    funcion para mover la mancha de aceite del mapa de la derecha
     """
     
     global nvl5,y,p,can5,x2,contgasonvl55,contvelocidad22,aceite2,contaceite2,resbalar2
@@ -3533,7 +3469,6 @@ def manchitanvl55():#mover minivan
         contaceite2 = contaceite2 + 1
         
     if(contaceite2==320):
-        #c1.delete(z)
         can5.move(aceite2,menosaceite2-can5.coords(aceite2)[0],-can5.coords(aceite2)[1])
         contaceite2 = 0
 
@@ -3544,8 +3479,6 @@ def manchitanvl55():#mover minivan
         posy1xm2 = can5.coords(x2)[1]
         posx2am2 = can5.coords(aceite2)[0]
         posy2am2 = can5.coords(aceite2)[1]
-        
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1xm2>=posx2am2 and posx1xm2<=posx2am2+28 and posy1xm2>=posy2am2 and posy1xm2<=posy2am2+50 or(posx1xm2+28>=posx2am2 and posx1xm2+28<=posx2am2+28 and posy1xm2>=posy2am2 and posy1xm2<=posy2am2+50) ):
             print("crash")
@@ -3568,7 +3501,7 @@ def manchitanvl55():#mover minivan
 ###-----------------------------------------------------------nyan
 def podernvl5 ():
     """
-    esta funcion es para mover el gato de la gasolina
+    esta funcion es para mover el gato de la gasolina del mapa de la izquierda
     """
     global nvl5,y,p,c,z,can5,contadormini,x,contgasonvl5,contvelocidad,contadorpoder,reloadpoder,nyan
     menospoder=random.randint(280,500)
@@ -3588,7 +3521,6 @@ def podernvl5 ():
         posx2ny = can5.coords(nyan)[0]
         posy2ny = can5.coords(nyan)[1]
         
-        #posx1 <= posx2 and posx2+37 <= posx1 and posy1<= posy2 and posy2 <= posy1 + 50
 
         if(posx1ny>=posx2ny and posx1ny<=posx2ny+28 and posy1ny>=posy2ny and posy1ny<=posy2ny+50 or(posx1ny+28>=posx2ny and posx1ny+28<=posx2ny+28 and posy1ny>=posy2ny and posy1ny<=posy2ny+50) ):
             print("crash")
@@ -3602,7 +3534,7 @@ def podernvl5 ():
     
 def podernvl55 ():
     """
-    esta funcion es para mover el gato de la gasolina
+    esta funcion es para mover el gato de la gasolina del mapa de la derecha
     """
     global nvl5,y,p,c,z,can5,contadormini,x,contgasonvl55,contvelocidad,contadorpoder2,reloadpoder2,nyan2
     menospoder2=random.randint(700,980)
@@ -3621,7 +3553,6 @@ def podernvl55 ():
         posy1ny2 = can5.coords(x2)[1]
         posx2ny2 = can5.coords(nyan2)[0]
         posy2ny2 = can5.coords(nyan2)[1]
-        
         
 
         if(posx1ny2>=posx2ny2 and posx1ny2<=posx2ny2+28 and posy1ny2>=posy2ny2 and posy1ny2<=posy2ny2+50 or(posx1ny2+28>=posx2ny2 and posx1ny2+28<=posx2ny2+28 and posy1ny2>=posy2ny2 and posy1ny2<=posy2ny2+50) ):
