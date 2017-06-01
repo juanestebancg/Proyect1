@@ -79,6 +79,10 @@ def nivel1(): # Abrir la ventana del nivel 1, fusionar funcion de guardado a pre
     c1.pack()
     y=c1.create_image(400,400,image=mapa)
     y2=c1.create_image(845,400,image=mapa)
+    aceite=c1.create_image(480,30,image=mancha)#aceite del 1
+    aceite2=c1.create_image(830,30,image=mancha)#aceite del 2
+    c1.lower(aceite2)
+    c1.lower(aceite)
     c1.lower(y)
     c1.lower(y2)#poner mapa atras
     # Liga el evento key al canvas
@@ -105,8 +109,6 @@ def nivel1(): # Abrir la ventana del nivel 1, fusionar funcion de guardado a pre
     nyan2=c1.create_image(770,50,image=imagengasolina)#nyan 2
     x2=c1.create_image(830,750,image=carro)#imagen carro 2
     min2=c1.create_image(830,-50,image=minivan)#minivan dos
-    aceite=c1.create_image(480,30,image=mancha)#aceite del 1
-    aceite2=c1.create_image(830,30,image=mancha)#aceite del 2
     fight2=c1.create_image(750,50,image=fighter)#fighter 2
     ##cargar funciones
     gasolina()
@@ -821,6 +823,10 @@ def nivel2(): # Abrir la ventana del nivel 2, fusionar funcion de guardado a pre
     can2.pack()
     y=can2.create_image(400,400,image=mapa2)#mapa del nivel 2
     y2=can2.create_image(847,400,image=mapa2)
+    aceite=can2.create_image(480,30,image=mancha)#aceite del 1
+    aceite2=can2.create_image(770,30,image=mancha)#aceite del 1
+    can2.lower(aceite)
+    can2.lower(aceite2)
     can2.lower(y)
     can2.lower(y2)
     #label gasolina, jugadores, puntos
@@ -837,7 +843,6 @@ def nivel2(): # Abrir la ventana del nivel 2, fusionar funcion de guardado a pre
     a=can2.create_image(400,170,image=runner)#imagen runner
     z=can2.create_image(500,-50,image=minivan)#imagen minivan
     fight=can2.create_image(500,50,image=fighter)#imagen fighter
-    aceite=can2.create_image(480,30,image=mancha)#aceite del 1
     nyan=can2.create_image(450,50,image=imagengasolina)#nyan 1
     ##2 pantalla
     x2=can2.create_image(830,750,image=carro)#imagen carro 2
@@ -845,7 +850,6 @@ def nivel2(): # Abrir la ventana del nivel 2, fusionar funcion de guardado a pre
     min2=can2.create_image(830,-50,image=minivan)#minivan dos
     fight2=can2.create_image(750,50,image=fighter)#fighter 2
     run2=can2.create_image(730,50,image=runner)#imagen runner
-    aceite2=can2.create_image(770,30,image=mancha)#aceite del 1
     can2.bind("<KeyPress>", keydown)
     can2.bind("<KeyRelease>", keyup)
     can2.focus_set()
@@ -915,6 +919,8 @@ contgasonvl2=60
 contgasonvl22=60
 contpuntosnvl2=0
 contpuntosnvl22=0
+minicnvl2=0
+minicnvl22=0
 ###contadores
 ###----------------------------------------------------------------------------------------Players
 def guardar2():
@@ -989,15 +995,15 @@ def mininvl2():#mover minivan
     Esta funcion mueve la minivan del mapa de la izquierda
     """
     
-    global nvl2,y,p,c,z,c1,contadormini,x,contgasonvl2,contvelocidad
+    global nvl2,y,p,minicnvl2,z,c1,contadormini,x,contgasonvl2,contvelocidad
     menos=random.randint(280,500)
-    if(c<350):
+    if(minicnvl2<350):
         can2.move(z,0,3)
-        c = c + 1
+        minicnvl2 = minicnvl2 + 1
         
-    if(c==350): 
+    if(minicnvl2==350): 
         can2.move(z,menos-can2.coords(z)[0],-can2.coords(z)[1])
-        c = 0
+        minicnvl2 = 0
     
     if(contadormini<950):#250
         
@@ -1017,7 +1023,7 @@ def mininvl2():#mover minivan
             nvl2.after(10,mininvl2)
             contgasonvl2=contgasonvl2-2
             contvelocidad=0
-            c=0
+            minicnvl2=0
             can2.move(y,0,-can2.coords(y)[1])
         else:
             contadormini=0
@@ -1027,15 +1033,15 @@ def mininvl22():
     Esta funcion mueve la minivan del mapa de la derecha
     """
     
-    global nvl1,y,p,c2player,c1,contadormini2,x2,contgasonvl22,contvelocidad22,min2
+    global nvl1,y,p,minicnvl22,c1,contadormini2,x2,contgasonvl22,contvelocidad22,min2
     menos2=random.randint(700,970)
-    if(c2player<370):
+    if(minicnvl22<370):
         can2.move(min2,0,3)
-        c2player = c2player + 1
+        minicnvl22 = minicnvl22 + 1
         
-    if(c2player==370):
+    if(minicnvl22==370):
         can2.move(min2,menos2-can2.coords(min2)[0],-can2.coords(min2)[1])
-        c2player = 0
+        minicnvl22 = 0
 
     if(contadormini2<950):#250
         
@@ -1055,7 +1061,7 @@ def mininvl22():
             nvl2.after(10,mininvl22)
             contgasonvl22=contgasonvl22-2
             contvelocidad22=0
-            c2player=0
+            minicnvl22=0
             can2.move(y2,0,-can2.coords(y2)[1])
         else:
             contadormini2=0
@@ -1513,6 +1519,10 @@ def nivel3(): # Abrir la ventana del nivel 3, fusionar funcion de guardado a pre
     can3.pack()
     y=can3.create_image(400,400,image=mapa3)#mapa del nivel 2
     y2=can3.create_image(847,400,image=mapa3)
+    aceite=can3.create_image(480,30,image=mancha)#aceite del 1
+    aceite2=can3.create_image(770,30,image=mancha)#aceite del 1
+    can3.lower(aceite)
+    can3.lower(aceite2)
     can3.lower(y)
     can3.lower(y2)
     #label gasolina, jugadores, puntos
@@ -1529,7 +1539,6 @@ def nivel3(): # Abrir la ventana del nivel 3, fusionar funcion de guardado a pre
     a=can3.create_image(400,170,image=runner)#imagen runner
     z=can3.create_image(500,-50,image=minivan)#imagen minivan
     fight=can3.create_image(500,50,image=fighter)#imagen fighter
-    aceite=can3.create_image(480,30,image=mancha)#aceite del 1
     nyan=can3.create_image(450,50,image=imagengasolina)#nyan 1
     ##2 pantalla
     x2=can3.create_image(830,750,image=carro)#imagen carro 2
@@ -1537,7 +1546,6 @@ def nivel3(): # Abrir la ventana del nivel 3, fusionar funcion de guardado a pre
     min2=can3.create_image(830,-50,image=minivan)#minivan dos
     fight2=can3.create_image(750,50,image=fighter)#fighter 2
     run2=can3.create_image(730,50,image=runner)#imagen runner
-    aceite2=can3.create_image(770,30,image=mancha)#aceite del 1
     can3.bind("<KeyPress>", keydown)
     can3.bind("<KeyRelease>", keyup)
     can3.focus_set()
@@ -1613,6 +1621,8 @@ contgasonvl3=60
 contgasonvl33=60
 contpuntosnvl3=0
 contpuntosnvl33=0
+minicnvl3=0
+minicnvl33=0
 ###contadores
 ####----------------------------------------------------------------------------guardar y cargar
 def guardar3():
@@ -1687,15 +1697,15 @@ def mininvl3():#mover minivan
     Esta funcion mueve la minivan del mapa de la izquierda
     """
     
-    global nvl3,y,p,c,z,can3,contadormini,x,contgasonvl3,contvelocidad
+    global nvl3,y,p,minicnvl3,z,can3,contadormini,x,contgasonvl3,contvelocidad
     menos=random.randint(280,500)
-    if(c<280):
+    if(minicnvl3<280):
         can3.move(z,0,5)
-        c = c + 1
+        minicnvl3 = minicnvl3 + 1
         
-    if(c==280):
+    if(minicnvl3==280):
         can3.move(z,menos-can3.coords(z)[0],-can3.coords(z)[1])
-        c = 0
+        minicnvl3 = 0
         
     if(contadormini<950):#250
         
@@ -1716,7 +1726,7 @@ def mininvl3():#mover minivan
             nvl3.after(10,mininvl3)
             contgasonvl3=contgasonvl3-2
             contvelocidad=0
-            c=0
+            minicnvl3=0
             can3.move(y,0,-can3.coords(y)[1])
         else:
             contadormini=0
@@ -1726,15 +1736,15 @@ def mininvl33():
     Esta funcion mueve la minivan del mapa de la derecha
     """
     
-    global nvl3,y,p,c2player,can3,contadormini2,x2,contgasonvl33,contvelocidad22,min2
+    global nvl3,y,p,minicnvl33,can3,contadormini2,x2,contgasonvl33,contvelocidad22,min2
     menos2=random.randint(700,970)
-    if(c2player<280):
+    if(minicnvl33<280):
         can3.move(min2,0,5)
-        c2player = c2player + 1
+        minicnvl33 = minicnvl33 + 1
         
-    if(c2player==280):
+    if(minicnvl33==280):
         can3.move(min2,menos2-can3.coords(min2)[0],-can3.coords(min2)[1])
-        c2player = 0
+        minicnvl33 = 0
         
     if(contadormini2<950):#250
         
@@ -1754,7 +1764,7 @@ def mininvl33():
             nvl3.after(10,mininvl33)
             contgasonvl33=contgasonvl33-2
             contvelocidad22=0
-            c2player=0
+            minicnvl33=0
             can3.move(y2,0,-can3.coords(y2)[1])
         else:
             contadormini2=0
@@ -2212,6 +2222,10 @@ def nivel4(): # Abrir la ventana del nivel 4, fusionar funcion de guardado a pre
     can4.pack()
     y=can4.create_image(400,400,image=mapa4)#mapa del nivel 2
     y2=can4.create_image(847,400,image=mapa4)
+    aceite=can4.create_image(480,30,image=mancha)#aceite del 1
+    aceite2=can4.create_image(770,30,image=mancha)#aceite del 2
+    can4.lower(aceite)
+    can4.lower(aceite2)
     can4.lower(y)
     can4.lower(y2)
     #label gasolina, jugadores, puntos
@@ -2228,7 +2242,6 @@ def nivel4(): # Abrir la ventana del nivel 4, fusionar funcion de guardado a pre
     a=can4.create_image(400,170,image=runner)#imagen runner
     z=can4.create_image(500,-50,image=minivan)#imagen minivan
     fight=can4.create_image(500,50,image=fighter)#imagen fighter
-    aceite=can4.create_image(480,30,image=mancha)#aceite del 1
     nyan=can4.create_image(450,50,image=imagengasolina)#nyan 1
     ##2 pantalla
     x2=can4.create_image(830,750,image=carro)#imagen carro 2
@@ -2236,7 +2249,6 @@ def nivel4(): # Abrir la ventana del nivel 4, fusionar funcion de guardado a pre
     min2=can4.create_image(830,-50,image=minivan)#minivan dos
     fight2=can4.create_image(750,50,image=fighter)#fighter 2
     run2=can4.create_image(730,50,image=runner)#imagen runner
-    aceite2=can4.create_image(770,30,image=mancha)#aceite del 1
     can4.bind("<KeyPress>", keydown)
     can4.bind("<KeyRelease>", keyup)
     can4.focus_set()
@@ -2309,6 +2321,8 @@ contgasonvl4=60
 contgasonvl44=60
 contpuntosnvl4=0
 contpuntosnvl44=0
+minicnvl4=0
+minicnvl44=0
 ###contadores
 ####----------------------------------------------------------------------------guardar y cargar
 def guardar4():
@@ -2382,15 +2396,15 @@ def mininvl4():#mover minivan
     Esta funcion mueve la minivan del mapa de la izquierda
     """
     
-    global nvl4,y,p,c,z,can4,contadormini,x,contgasonvl4,contvelocidad
+    global nvl4,y,p,minicnvl4,z,can4,contadormini,x,contgasonvl4,contvelocidad
     menos=random.randint(280,500)
-    if(c<240):
+    if(minicnvl4<240):
         can4.move(z,0,8)
-        c = c + 1
+        minicnvl4 = minicnvl4 + 1
         
-    if(c==240):
+    if(minicnvl4==240):
         can4.move(z,menos-can4.coords(z)[0],-can4.coords(z)[1])
-        c = 0
+        minicnvl4 = 0
         
 
     if(contadormini<950):#250
@@ -2411,7 +2425,7 @@ def mininvl4():#mover minivan
             nvl4.after(10,mininvl4)
             contgasonvl4=contgasonvl4-2
             contvelocidad=0
-            c=0
+            minicnvl4=0
             can4.move(y,0,-can4.coords(y)[1])
         else:
             contadormini=0
@@ -2421,15 +2435,15 @@ def mininvl44():
     Esta funcion mueve la minivan del mapa de la derecha
     """
     
-    global nvl4,y,p,c2player,can4,contadormini2,x2,contgasonvl44,contvelocidad22,min2
+    global nvl4,y,p,minicnvl44,can4,contadormini2,x2,contgasonvl44,contvelocidad22,min2
     menos2=random.randint(700,970)
-    if(c2player<240):
+    if(minicnvl44<240):
         can4.move(min2,0,8)
-        c2player = c2player + 1
+        minicnvl44 = minicnvl44 + 1
         
-    if(c2player==240):
+    if(minicnvl44==240):
         can4.move(min2,menos2-can4.coords(min2)[0],-can4.coords(min2)[1])
-        c2player = 0
+        minicnvl44 = 0
 
     if(contadormini2<950):#250
         
@@ -2449,7 +2463,7 @@ def mininvl44():
             nvl4.after(10,mininvl44)
             contgasonvl44=contgasonvl44-2
             contvelocidad22=0
-            c2player=0
+            minicnvl44=0
             can4.move(y2,0,-can4.coords(y2)[1])
         else:
             contadormini2=0
@@ -2465,7 +2479,7 @@ def gasolinanvl4():
     
     
     if(contgasonvl4>=0):
-        gaso.set(str(contgasonvl4)+" "+"G")
+        gaso.set(str(contgasonvl4)+" "+"Gal.")
         contgasonvl4=contgasonvl4-1
     can4.after(1000,gasolinanvl4)
     if(contgasonvl4<0):
@@ -2478,7 +2492,7 @@ def gasolinanvl44():
     """
     global gaso22,nvl4,contgasonvl44
     if(contgaso22>=0):
-        gaso22.set(str(contgasonvl44)+" "+ "G")
+        gaso22.set(str(contgasonvl44)+" "+ "Gal.")
         contgasonvl44=contgasonvl44-1
     can4.after(1000,gasolinanvl44)
     if(contgasonvl44<0):
@@ -2900,6 +2914,10 @@ def nivel5(): # Abrir la ventana del nivel 5, fusionar funcion de guardado a pre
     can5.pack()
     y=can5.create_image(400,400,image=mapa5)#mapa del nivel 2
     y2=can5.create_image(847,400,image=mapa5)
+    aceite=can5.create_image(480,30,image=mancha)#aceite del 1
+    aceite2=can5.create_image(770,30,image=mancha)#aceite del 2
+    can5.lower(aceite)
+    can5.lower(aceite2)
     can5.lower(y)
     can5.lower(y2)
     #label gasolina, jugadores, puntos
@@ -2916,7 +2934,6 @@ def nivel5(): # Abrir la ventana del nivel 5, fusionar funcion de guardado a pre
     a=can5.create_image(400,170,image=runner)#imagen runner
     z=can5.create_image(500,-50,image=minivan)#imagen minivan
     fight=can5.create_image(500,50,image=fighter)#imagen fighter
-    aceite=can5.create_image(480,30,image=mancha)#aceite del 1
     nyan=can5.create_image(450,50,image=imagengasolina)#nyan 1
     ##2 pantalla
     x2=can5.create_image(830,750,image=carro)#imagen carro 2
@@ -2924,7 +2941,6 @@ def nivel5(): # Abrir la ventana del nivel 5, fusionar funcion de guardado a pre
     min2=can5.create_image(830,-50,image=minivan)#minivan dos
     fight2=can5.create_image(750,50,image=fighter)#fighter 2
     run2=can5.create_image(730,50,image=runner)#imagen runner
-    aceite2=can5.create_image(770,30,image=mancha)#aceite del 1
     can5.bind("<KeyPress>", keydown)
     can5.bind("<KeyRelease>", keyup)
     can5.focus_set()
@@ -2997,6 +3013,8 @@ contgasonvl5=60
 contgasonvl55=60
 contpuntosnvl5=0
 contpuntosnvl55=0
+minicnvl5=0
+minicnvl55=0
 ###contadores
 ####----------------------------------------------------------------------------guardar y cargar
 def guardar5():
@@ -3070,15 +3088,15 @@ def mininvl5():#mover minivan
     Esta funcion mueve la minivan del mapa de la izquierda
     """
     
-    global nvl5,y,p,c,z,can5,contadormini,x,contgasonvl5,contvelocidad
+    global nvl5,y,p,minicnvl5,z,can5,contadormini,x,contgasonvl5,contvelocidad
     menos=random.randint(280,500)
-    if(c<180):
+    if(minicnvl5<180):
         can5.move(z,0,12)
-        c = c + 1
+        minicnvl5 = minicnvl5 + 1
         
-    if(c==180):
+    if(minicnvl5==180):
         can5.move(z,menos-can5.coords(z)[0],-can5.coords(z)[1])
-        c = 0
+        minicnvl5 = 0
         
 
     if(contadormini<950):#250
@@ -3099,7 +3117,7 @@ def mininvl5():#mover minivan
             nvl5.after(10,mininvl5)
             contgasonvl5=contgasonvl5-2
             contvelocidad=0
-            c=0
+            minicnvl5=0
             can5.move(y,0,-can5.coords(y)[1])
         else:
             contadormini=0
@@ -3109,15 +3127,15 @@ def mininvl55():
     Esta funcion mueve la minivan del mapa de la derecha
     """
     
-    global nvl5,y,p,c2player,can5,contadormini2,x2,contgasonvl55,contvelocidad22,min2
+    global nvl5,y,p,minicnvl55,can5,contadormini2,x2,contgasonvl55,contvelocidad22,min2
     menos2=random.randint(700,970)
-    if(c2player<180):
+    if(minicnvl55<180):
         can5.move(min2,0,12)
-        c2player = c2player + 1
+        minicnvl55 = minicnvl55 + 1
         
-    if(c2player==180):
+    if(minicnvl55==180):
         can5.move(min2,menos2-can5.coords(min2)[0],-can5.coords(min2)[1])
-        c2player = 0
+        minicnvl55 = 0
     
     if(contadormini2<950):#250
         
@@ -3137,7 +3155,7 @@ def mininvl55():
             nvl5.after(10,mininvl55)
             contgasonvl55=contgasonvl55-2
             contvelocidad22=0
-            c2player=0
+            minicnvl55=0
             can5.move(y2,0,-can5.coords(y2)[1])
         else:
             contadormini2=0
@@ -3155,7 +3173,7 @@ def gasolinanvl5():
     
     
     if(contgasonvl5>=0):
-        gaso.set(str(contgasonvl5)+" "+"G")
+        gaso.set(str(contgasonvl5)+" "+"Gal.")
         contgasonvl5=contgasonvl5-1
     can5.after(1000,gasolinanvl5)
     if(contgasonvl5<0):
@@ -3170,7 +3188,7 @@ def gasolinanvl55():
     
     
     if(contgasonvl55>=0):
-        gaso22.set(str(contgasonvl55)+" "+ "G")
+        gaso22.set(str(contgasonvl55)+" "+ "Gal.")
         contgasonvl55=contgasonvl55-1
     can5.after(1000,gasolinanvl55)
     if(contgasonvl55<0):
